@@ -23,3 +23,4 @@ void configLogging() {
     Logger.root.onRecord.listen(new LogConsoleHandler());
 }
 
+
