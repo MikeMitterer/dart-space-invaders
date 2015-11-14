@@ -2,6 +2,7 @@ library spaceinvaders;
 
 import 'dart:html' as dom;
 import 'dart:math' as math;
+import 'dart:collection';
 
 import 'package:console_log_handler/console_log_handler.dart';
 import 'package:logging/logging.dart';
@@ -30,6 +31,12 @@ class Painter {
             drawable.sprite._width,
             drawable.sprite._height);
     }
+}
+
+class ScreeSize {
+    int width;
+    int height;
+    ScreeSize(this.width, this.height);
 }
 
 class Screen {
@@ -63,6 +70,8 @@ class Screen {
     int get width => _canvas.width;
 
     int get height => _canvas.height;
+
+    ScreeSize get size => new ScreeSize(width,height);
 
     void clear() {
         _context.clearRect(0,0,width,height);
@@ -120,6 +129,7 @@ class SpriteFactory {
 
     Tank _tank;
     Swarm _swarm;
+    Magazin _magazin;
 
     void create() {
         if (_alienSprites.isEmpty) {
@@ -141,7 +151,11 @@ class SpriteFactory {
         return _cities;
     }
 
-    Swarm get swarm => _swarm ?? ( _swarm = new Swarm(_aliens));
+    Swarm get swarm => _swarm ?? ( _swarm = new Swarm(new UnmodifiableListView(_aliens)));
+
+    Bullet get bullet => new Bullet(new Sprite(_image,120, 0, 1, 10));
+
+    Magazin get magazin => _magazin ?? ( _magazin = new Magazin());
 
     // - private ----------------------------------------------------------------------------------
 
@@ -219,6 +233,8 @@ class Alien extends ScreenObject implements Drawable {
     int x = 0;
     int y = 0;
 
+    bool killed = false;
+
     Alien(this._toggleSprite) {
         _logger.info("Alien created!");
     }
@@ -227,6 +243,13 @@ class Alien extends ScreenObject implements Drawable {
     Sprite get sprite => _toggleSprite;
 
     void toggle() { _toggleSprite.toggle(); }
+
+    @override
+    void draw(Painter painter) {
+        if(!killed) {
+            painter.draw(this);
+        }
+    }
 }
 
 class Swarm extends ScreenObject implements Drawable {
@@ -238,12 +261,12 @@ class Swarm extends ScreenObject implements Drawable {
     int _x = 0;
     int _y = 0;
 
-    final List<Alien> _aliens;
+    final UnmodifiableListView<Alien> aliens;
 
     int _width = 0;
     int _height = 0;
 
-    Swarm(this._aliens) {
+    Swarm(this.aliens) {
         _logger.info("Swarm created!");
         _updatePosition();
     }
@@ -253,15 +276,15 @@ class Swarm extends ScreenObject implements Drawable {
 
     @override
     void draw(final Painter painter) {
-        _aliens.forEach((final Alien alien) => alien.draw(painter));
+        aliens.forEach((final Alien alien) => alien.draw(painter));
     }
 
-    void toggle() { _aliens.forEach( (final Alien alien) => alien.toggle() ); }
+    void toggle() { aliens.forEach( (final Alien alien) => alien.toggle() ); }
 
     int get x => _x;
     int get y => _y;
 
-    int get moveWidth => _aliens.first.width;
+    int get moveWidth => aliens.first.width;
 
     void set x(final int value) {
         _x = value;
@@ -274,7 +297,7 @@ class Swarm extends ScreenObject implements Drawable {
     }
 
     void moveDown() {
-        _y += _aliens.first.height;
+        _y += aliens.first.height;
         _updatePosition();
     }
 
@@ -300,12 +323,13 @@ class Swarm extends ScreenObject implements Drawable {
         _updatePosition();
     }
 
+
     // - private ----------------------------------------------------------------------------------
 
 
     void _updatePosition() {
 
-        _height = ((_aliens.first.height * 1.5) * Swarm.ROWS).toInt();
+        _height = ((aliens.first.height * 1.5) * Swarm.ROWS).toInt();
 
         int index = 0;
         final int sectionWidth = (width ~/ Swarm.COLS);
@@ -313,7 +337,7 @@ class Swarm extends ScreenObject implements Drawable {
         for(int rows = 0;rows < Swarm.ROWS;rows++) {
             for(int cols = 0; cols < Swarm.COLS; cols++) {
 
-                final Alien alien = _aliens[index];
+                final Alien alien = aliens[index];
                 final int centerPos = (sectionWidth ~/ 2) - (alien.width ~/ 2 );
 
                 alien.x = (x + centerPos + (cols * sectionWidth)).toInt();
@@ -339,6 +363,54 @@ class City extends ScreenObject implements Drawable {
     int get height => _sprite._height;
 }
 
+class Bullet extends ScreenObject with MoveVertical implements Drawable {
+    final Logger _logger = new Logger('spaceinvaders.Bullet');
+
+    int x = 0;
+
+    final Sprite sprite;
+
+    Bullet(this.sprite);
+}
+
+class Magazin {
+    final List<Bullet> _bullets = new List<Bullet>();
+
+    void addBullet(final Bullet bullet) {
+        _bullets.add(bullet);
+    }
+
+    void removeFailedBullets(int maxHeight) {
+        _bullets.removeWhere((final Bullet bullet) {
+            return bullet.y > maxHeight;
+        });
+    }
+
+    void fire({ final int speed: 10}) {
+        _bullets.forEach((final Bullet bullet) => bullet.moveUp(speed: speed));
+    }
+
+    void draw(final Painter painter) {
+        _bullets.forEach((final Bullet bullet) => bullet.draw(painter));
+    }
+
+    void checkIfAlienIsHit(final UnmodifiableListView aliens) {
+        aliens.where((final Alien alien) => !alien.killed).forEach((final Alien alien) {
+            final math.Rectangle rectAlien = new math.Rectangle(alien.x,alien.y,alien.width,alien.height);
+
+            for(int index = 0;index < _bullets.length;index++) {
+                final Bullet bullet = _bullets[index];
+                final math.Rectangle rectBullet = new math.Rectangle(bullet.x,bullet.y,bullet.width,bullet.height);
+                if(rectAlien.intersects(rectBullet)) {
+                    alien.killed = true;
+                    _bullets.remove(bullet);
+                    break;
+                }
+            };
+        });
+    }
+}
+
 class KeyCode {
     final int code;
     const KeyCode(this.code);
@@ -348,6 +420,8 @@ class KeyCode {
 
     static const KeyCode Up = const KeyCode(38);
     static const KeyCode Down = const KeyCode(40);
+
+    static const KeyCode Space = const KeyCode(32);
 }
 
 class InputHandler {
@@ -361,7 +435,7 @@ class InputHandler {
             _down[event.keyCode] = true;
             _pressed[event.keyCode] = true;
 
-            //_logger.info("K ${event.keyCode}");
+             //_logger.info("K ${event.keyCode}");
         });
         dom.document.onKeyUp.listen((final dom.KeyboardEvent event) {
             _down[event.keyCode] = false;
@@ -410,13 +484,13 @@ class FrameHandler {
     void toggleDirection() { _direction = _direction == Direction.Left ? Direction.Right : Direction.Left; }
 }
 
-void init(final FrameHandler frameHandler, final Screen screen, final SpriteFactory spritefactory) {
+void init(final FrameHandler frameHandler, final ScreenSize screensize, final SpriteFactory spritefactory) {
     frameHandler.updateFrequency = 30;
 
     spritefactory.tank.x = 20;
-    spritefactory.tank.y = screen.height - spritefactory.tank.height * 2;
+    spritefactory.tank.y = screensize.height - spritefactory.tank.height * 2;
 
-    final int section = (screen.width - 40) ~/ spritefactory.cities.length;
+    final int section = (screensize.width - 40) ~/ spritefactory.cities.length;
     for(int cityIndex = 0;cityIndex < spritefactory.cities.length;cityIndex++) {
 
         spritefactory.cities[cityIndex].x = (section * (cityIndex + 1)) - (section ~/ 2);
@@ -425,11 +499,15 @@ void init(final FrameHandler frameHandler, final Screen screen, final SpriteFact
     }
 
     spritefactory.swarm.x = 20;
-    spritefactory.swarm.width = (screen.width * 0.666).toInt();
+    spritefactory.swarm.width = (screensize.width * 0.666).toInt();
+
+
 }
 
-void update(final FrameHandler frameHandler,final SpriteFactory spritefactory, final InputHandler inputHandler) {
-    final int tankSpeed = 8;
+void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
+        final InputHandler inputHandler, final ScreenSize screensize) {
+
+    final int tankSpeed = 5;
 
     if (inputHandler.isDown(KeyCode.Left)) {
 
@@ -448,44 +526,55 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory, f
         spritefactory.tank.moveDown(speed: tankSpeed);
     }
 
-    if(inputHandler.isPressed(KeyCode.Down)) {
+//    if(inputHandler.isPressed(KeyCode.Down)) {
+//
+//        spritefactory.swarm.moveDown();
+//
+//    } else if(inputHandler.isPressed(KeyCode.Left)) {
+//
+//        spritefactory.swarm.moveLeft();
+//
+//    } else if(inputHandler.isPressed(KeyCode.Right)) {
+//
+//        spritefactory.swarm.moveRight();
+//
+//    }
 
-        spritefactory.swarm.moveDown();
-
-    } else if(inputHandler.isPressed(KeyCode.Left)) {
-
-        spritefactory.swarm.moveLeft();
-
-    } else if(inputHandler.isPressed(KeyCode.Right)) {
-
-        spritefactory.swarm.moveRight();
-
+    if(inputHandler.isPressed(KeyCode.Space)) {
+        final Bullet bullet = spritefactory.bullet;
+        bullet.x = spritefactory.tank.x + spritefactory.tank.width ~/ 2;
+        bullet.y = spritefactory.tank.y;
+        spritefactory.magazin.addBullet(bullet);
     }
 
     spritefactory.cities.forEach((final City city) {
 
     });
 
-    void _changeDirection() {
+    void _changeDirection(final Direction direction) {
         spritefactory.swarm.moveDown();
         frameHandler.toggleDirection();
-        //frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+
+        // Make sure we move straight down! (undo the previous horizontal movement)
+        direction == Direction.Right ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
+
+        frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
     }
 
     frameHandler.update((final Direction direction) {
         spritefactory.swarm.toggle();
-        direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
-
-        if(spritefactory.swarm.x + spritefactory.swarm.width >= (500 - 40)) {
-
-            _changeDirection();
-
-        } else if(spritefactory.swarm.x <= 20) {
-
-            _changeDirection();
-
-        }
+//        direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
+//
+//        if(spritefactory.swarm.x + spritefactory.swarm.width >= (500 - 10)) {
+//            _changeDirection(direction);
+//        } else if(spritefactory.swarm.x <= 10) {
+//            _changeDirection(direction);
+//        }
     });
+
+    spritefactory.magazin.fire(speed: 20);
+    spritefactory.magazin.checkIfAlienIsHit(spritefactory.swarm.aliens);
+    spritefactory.magazin.removeFailedBullets(screensize.height);
 }
 
 void render(final Screen screen,final SpriteFactory spritefactory) {
@@ -500,8 +589,7 @@ void render(final Screen screen,final SpriteFactory spritefactory) {
         city.draw(painter);
     });
 
-    //spritefactory.swarm._aliens.first.draw(painter);
-
+    spritefactory.magazin.draw(painter);
 }
 
 main() {
@@ -513,12 +601,13 @@ main() {
     final FrameHandler frameHandler = new FrameHandler();
     final Screen screen = new Screen()..create();
     final SpriteFactory spritefactory = new SpriteFactory()..create();
+    final ScreeSize screensize = screen.size;
 
-    init(frameHandler,screen,spritefactory);
+    init(frameHandler,screensize,spritefactory);
 
     void loop() {
 
-        update(frameHandler,spritefactory,inputHandler);
+        update(frameHandler,spritefactory,inputHandler,screensize);
         render(screen,spritefactory);
 
         dom.window.requestAnimationFrame((_) => loop());
