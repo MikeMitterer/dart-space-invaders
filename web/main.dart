@@ -563,13 +563,13 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
 
     frameHandler.update((final Direction direction) {
         spritefactory.swarm.toggle();
-//        direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
-//
-//        if(spritefactory.swarm.x + spritefactory.swarm.width >= (500 - 10)) {
-//            _changeDirection(direction);
-//        } else if(spritefactory.swarm.x <= 10) {
-//            _changeDirection(direction);
-//        }
+        direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
+
+        if(spritefactory.swarm.x + spritefactory.swarm.width >= (500 - 10)) {
+            _changeDirection(direction);
+        } else if(spritefactory.swarm.x <= 10) {
+            _changeDirection(direction);
+        }
     });
 
     spritefactory.magazin.fire(speed: 20);
