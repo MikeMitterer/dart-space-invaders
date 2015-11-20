@@ -389,6 +389,8 @@ class Cities extends ScreenObject implements Drawable {
     dom.CanvasRenderingContext2D _context;
     Painter _painter;
 
+    int cycles = 0;
+
     final UnmodifiableListView<City> _cities;
 
     Cities(this._cities) : _canvas = new dom.CanvasElement() {
@@ -415,17 +417,13 @@ class Cities extends ScreenObject implements Drawable {
 
     @override
     void draw(final Painter screenPainter) {
-        screenPainter.save();
-        _cities.forEach((final City city) => city.draw(painter));
-
-//        final ScreenSize size = (new Screen()).size;
-//
-//        _context.setStrokeColorRgb(0,255,0);
-//        _context.rect(1,1,size.width - 2,size.height - 2);
-//        _context.stroke();
-
+        if(cycles < 5) {
+            screenPainter.save();
+            _cities.forEach((final City city) => city.draw(painter));
+            screenPainter.restore();
+            cycles++;
+        }
         screenPainter.drawImage(_canvas,0,y);
-        screenPainter.restore();
     }
 
     // Create damage effect on city-canvas
@@ -443,19 +441,31 @@ class Cities extends ScreenObject implements Drawable {
         _context.clearRect(x - 6, y, 2, 2);
         _context.clearRect(x - 4, y - 4, 2, 2);
         _context.clearRect(x - 2, y - 6, 2, 2);
+
+//        final ScreenSize size = (new Screen()).size;
+//
+//        _context.setStrokeColorRgb(0,255,0);
+//        _context.rect(x,y,6,6);
+//        _context.stroke();
     }
 
     Painter get painter => (_painter ?? (_painter = new Painter(_context)));
 
     bool isCityHit(final Bullet bullet) {
-        final int canvasOffset = y;
+        final int canvasOffset = y; // transform y value to local coordinate system
         final math.Rectangle rectBullet = new math.Rectangle(bullet.x,bullet.y,bullet.width,(bullet.height ~/ 2));
 
         for(int index = 0;index < _cities.length;index++) {
             final City city = _cities[index];
             final math.Rectangle rectCity = new math.Rectangle(city.x,(city.y) + canvasOffset,city.width,(city.height));
             if(rectCity.intersects(rectBullet)) {
-                return true;
+
+                // get image-data and check if opaque
+                final dom.ImageData data = _context.getImageData(bullet.x, bullet.y - canvasOffset, 1, 1);
+                if (data.data[3] != 0) {
+                    damage(bullet.x, bullet.y - canvasOffset);
+                    return true;
+                }
             }
         }
         return false;
