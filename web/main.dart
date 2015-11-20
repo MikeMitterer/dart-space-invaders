@@ -1,8 +1,8 @@
 library spaceinvaders;
 
+import 'dart:collection';
 import 'dart:html' as dom;
 import 'dart:math' as math;
-import 'dart:collection';
 
 import 'package:console_log_handler/console_log_handler.dart';
 import 'package:logging/logging.dart';
@@ -31,14 +31,24 @@ class Painter {
             drawable.sprite._width,
             drawable.sprite._height);
     }
+
+    void drawImage(final dom.CanvasImageSource source,final num destX,final num destY) {
+        _context.drawImage(source,destX,destY);
+    }
+
+    void save() { _context.save(); }
+    void restore() { _context.restore(); }
+
 }
 
-class ScreeSize {
+class ScreenSize {
     int width;
     int height;
-    ScreeSize(this.width, this.height);
+    ScreenSize(this.width, this.height);
 }
 
+/// Abstracted canvas class useful in games
+/// Implemented as Singleton so that we can "construct" it multible times
 class Screen {
     final Logger _logger = new Logger('spaceinvaders.Screen');
 
@@ -49,9 +59,10 @@ class Screen {
     dom.CanvasRenderingContext2D _context;
     Painter _painter;
 
-    Screen({final int width: 500, final int height: 600})
-        : _width = width,
-            _height = height {
+    static Screen _singleton = null;
+
+    factory Screen({final int width: 500, final int height: 600}) {
+        return _singleton ?? (_singleton = new Screen._internal(width,height));
     }
 
     void create() {
@@ -71,13 +82,17 @@ class Screen {
 
     int get height => _canvas.height;
 
-    ScreeSize get size => new ScreeSize(width,height);
+    ScreenSize get size => new ScreenSize(width,height);
 
     void clear() {
         _context.clearRect(0,0,width,height);
     }
 
     Painter get painter => (_painter ?? (_painter = new Painter(_context)));
+
+    Screen._internal(this._width,this._height) {
+        _logger.info("Screen created...");
+    }
 }
 
 class Sprite {
@@ -123,13 +138,10 @@ class SpriteFactory {
 
     final List<ToggleSprite> _alienSprites = new List<ToggleSprite>();
 
-    final List<City> _cities = new List<City>();
-
-    final List<Alien> aliens = new List<Alien>();
-
     Tank _tank;
     Swarm _swarm;
     Magazin _magazin;
+    Cities _cities;
 
     void create() {
         if (_alienSprites.isEmpty) {
@@ -142,26 +154,20 @@ class SpriteFactory {
 
     Tank get tank => _tank ?? (_tank = new Tank(new Sprite(_image, 62, 0, 22, 16)));
 
-    List<City> get cities {
-        if(_cities.isEmpty) {
-            [1,2,3].forEach((_) {
-                _cities.add(new City(new Sprite(_image,84, 8, 36, 24)));
-            });
-        }
-        return _cities;
-    }
-
-    Swarm get swarm => _swarm ?? ( _swarm = new Swarm(new UnmodifiableListView(_aliens)));
+    Swarm get swarm => _swarm ?? ( _swarm = new Swarm(new UnmodifiableListView(_createAliens())));
 
     Bullet get bullet => new Bullet(new Sprite(_image,120, 0, 1, 10));
 
     Magazin get magazin => _magazin ?? ( _magazin = new Magazin());
 
+    Cities get cities => _cities ?? ( _cities = new Cities(new UnmodifiableListView( _createCities())));
+
     // - private ----------------------------------------------------------------------------------
 
-    List<Alien> get _aliens {
-
+    List<Alien> _createAliens() {
+        final List<Alien> aliens = new List<Alien>();
         final List<int> spriteIndex = [1,0,0,2,2];
+
         if(Swarm.ROWS != spriteIndex.length) {
             throw new ArgumentError("Number of Swarm-Rows must be ${spriteIndex.length} but was ${Swarm.ROWS}");
         }
@@ -177,6 +183,13 @@ class SpriteFactory {
         return aliens;
     }
 
+    List<City> _createCities() {
+        List<City> cities = new List<City>();
+        [1,2,3].forEach((_) {
+            cities.add(new City(new Sprite(_image,84, 8, 36, 24)));
+        });
+        return cities;
+    }
 }
 
 abstract class Drawable {
@@ -363,6 +376,105 @@ class City extends ScreenObject implements Drawable {
     int get height => _sprite._height;
 }
 
+class Cities extends ScreenObject implements Drawable {
+    final Logger _logger = new Logger('spaceinvaders.Cities');
+
+    int x = 0;
+    int y = 0;
+
+    int _width;
+    int _height;
+
+    final dom.CanvasElement _canvas;
+    dom.CanvasRenderingContext2D _context;
+    Painter _painter;
+
+    final UnmodifiableListView<City> _cities;
+
+    Cities(this._cities) : _canvas = new dom.CanvasElement() {
+        final ScreenSize size = (new Screen()).size;
+        _width = size.width;
+        _height = _cities.first.height;
+
+        _canvas.width = width;
+        _canvas.height = height;
+        _context = _canvas.getContext("2d");
+    }
+
+    int get length => _cities.length;
+
+    int get width => _width;
+
+    int get height => _height;
+
+    set width(final int value) {
+        _width = value;
+        _canvas.width = _width;
+        _updateCityPosition();
+    }
+
+    @override
+    void draw(final Painter screenPainter) {
+        screenPainter.save();
+        _cities.forEach((final City city) => city.draw(painter));
+
+//        final ScreenSize size = (new Screen()).size;
+//
+//        _context.setStrokeColorRgb(0,255,0);
+//        _context.rect(1,1,size.width - 2,size.height - 2);
+//        _context.stroke();
+
+        screenPainter.drawImage(_canvas,0,y);
+        screenPainter.restore();
+    }
+
+    // Create damage effect on city-canvas
+    void damage(num x,num y) {
+        // round x, y position
+        x = x.toInt();
+        y = y.toInt();
+
+        // draw damage effect to canvas
+        _context.clearRect(x - 2, y - 2, 4, 4);
+        _context.clearRect(x + 2, y - 4, 2, 4);
+        _context.clearRect(x + 4, y, 2, 2);
+        _context.clearRect(x + 2, y + 2, 2, 2);
+        _context.clearRect(x - 4, y + 2, 2, 2);
+        _context.clearRect(x - 6, y, 2, 2);
+        _context.clearRect(x - 4, y - 4, 2, 2);
+        _context.clearRect(x - 2, y - 6, 2, 2);
+    }
+
+    Painter get painter => (_painter ?? (_painter = new Painter(_context)));
+
+    bool isCityHit(final Bullet bullet) {
+        final int canvasOffset = y;
+        final math.Rectangle rectBullet = new math.Rectangle(bullet.x,bullet.y,bullet.width,(bullet.height ~/ 2));
+
+        for(int index = 0;index < _cities.length;index++) {
+            final City city = _cities[index];
+            final math.Rectangle rectCity = new math.Rectangle(city.x,(city.y) + canvasOffset,city.width,(city.height));
+            if(rectCity.intersects(rectBullet)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    void _updateCityPosition() {
+
+        // Every city has its on "section" or column
+        final int section = width ~/ _cities.length;
+        final int cityYPos = 0; //spritefactory.tank.y - spritefactory.cities.first.height * 2;
+
+        for(int cityIndex = 0;cityIndex < _cities.length;cityIndex++) {
+            _cities[cityIndex].x = (section * (cityIndex + 1)) - (section ~/ 2);
+            _cities[cityIndex].y = cityYPos;
+        }
+    }
+}
+
 class Bullet extends ScreenObject with MoveVertical implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Bullet');
 
@@ -380,6 +492,7 @@ class Magazin {
         _bullets.add(bullet);
     }
 
+    // remove bullets outside of the canvas
     void removeFailedBullets(int maxHeight) {
         _bullets.removeWhere((final Bullet bullet) {
             return bullet.y > maxHeight;
@@ -391,10 +504,12 @@ class Magazin {
     }
 
     void draw(final Painter painter) {
+        painter.save();
         _bullets.forEach((final Bullet bullet) => bullet.draw(painter));
+        painter.restore();
     }
 
-    void checkIfAlienIsHit(final UnmodifiableListView aliens) {
+    void checkIfAlienIsHit(final UnmodifiableListView<Alien> aliens) {
         aliens.where((final Alien alien) => !alien.killed).forEach((final Alien alien) {
             final math.Rectangle rectAlien = new math.Rectangle(alien.x,alien.y,alien.width,alien.height);
 
@@ -408,6 +523,16 @@ class Magazin {
                 }
             };
         });
+    }
+
+    void checkIfCityIsHit(final Cities cities) {
+        for(int index = 0;index < _bullets.length;index++) {
+            final Bullet bullet = _bullets[index];
+            if(cities.isCityHit(bullet)) {
+                _bullets.remove(bullet);
+                break;
+            }
+        }
     }
 }
 
@@ -487,16 +612,13 @@ class FrameHandler {
 void init(final FrameHandler frameHandler, final ScreenSize screensize, final SpriteFactory spritefactory) {
     frameHandler.updateFrequency = 30;
 
+    // Start at pos 20 and at the bottom of the screen
     spritefactory.tank.x = 20;
     spritefactory.tank.y = screensize.height - spritefactory.tank.height * 2;
 
-    final int section = (screensize.width - 40) ~/ spritefactory.cities.length;
-    for(int cityIndex = 0;cityIndex < spritefactory.cities.length;cityIndex++) {
-
-        spritefactory.cities[cityIndex].x = (section * (cityIndex + 1)) - (section ~/ 2);
-        spritefactory.cities[cityIndex].y = spritefactory.tank.y - spritefactory.cities[cityIndex].height * 2;
-
-    }
+    spritefactory.cities.x = 20;
+    spritefactory.cities.y = spritefactory.tank.y - spritefactory.cities.height * 2;
+    spritefactory.cities.width = screensize.width - 40;
 
     spritefactory.swarm.x = 20;
     spritefactory.swarm.width = (screensize.width * 0.666).toInt();
@@ -547,20 +669,17 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         spritefactory.magazin.addBullet(bullet);
     }
 
-    spritefactory.cities.forEach((final City city) {
-
-    });
-
     void _changeDirection(final Direction direction) {
-        spritefactory.swarm.moveDown();
+        // spritefactory.swarm.moveDown();
         frameHandler.toggleDirection();
 
         // Make sure we move straight down! (undo the previous horizontal movement)
         direction == Direction.Right ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
 
-        frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+        // frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
     }
 
+    // Moves the sprites down (toggle)
     frameHandler.update((final Direction direction) {
         spritefactory.swarm.toggle();
         direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
@@ -571,6 +690,8 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
             _changeDirection(direction);
         }
     });
+
+    spritefactory.magazin.checkIfCityIsHit(spritefactory.cities);
 
     spritefactory.magazin.fire(speed: 20);
     spritefactory.magazin.checkIfAlienIsHit(spritefactory.swarm.aliens);
@@ -585,9 +706,7 @@ void render(final Screen screen,final SpriteFactory spritefactory) {
     spritefactory.tank.draw(painter);
     spritefactory.swarm.draw(painter);
 
-    spritefactory.cities.forEach((final City city) {
-        city.draw(painter);
-    });
+    spritefactory.cities.draw(painter);
 
     spritefactory.magazin.draw(painter);
 }
@@ -601,7 +720,7 @@ main() {
     final FrameHandler frameHandler = new FrameHandler();
     final Screen screen = new Screen()..create();
     final SpriteFactory spritefactory = new SpriteFactory()..create();
-    final ScreeSize screensize = screen.size;
+    final ScreenSize screensize = screen.size;
 
     init(frameHandler,screensize,spritefactory);
 
