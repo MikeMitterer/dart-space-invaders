@@ -489,10 +489,13 @@ class Bullet extends ScreenObject with MoveVertical implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Bullet');
 
     int x = 0;
+    int velocity = 10;
 
     final Sprite sprite;
 
     Bullet(this.sprite);
+
+    void move() { y -= velocity; }
 }
 
 class Magazin {
@@ -505,12 +508,12 @@ class Magazin {
     // remove bullets outside of the canvas
     void removeFailedBullets(int maxHeight) {
         _bullets.removeWhere((final Bullet bullet) {
-            return bullet.y > maxHeight;
+            return bullet.y > maxHeight || bullet.y < 0;
         });
     }
 
-    void fire({ final int speed: 10}) {
-        _bullets.forEach((final Bullet bullet) => bullet.moveUp(speed: speed));
+    void fire() {
+        _bullets.forEach((final Bullet bullet) => bullet.move());
     }
 
     void draw(final Painter painter) {
@@ -619,6 +622,8 @@ class FrameHandler {
     void toggleDirection() { _direction = _direction == Direction.Left ? Direction.Right : Direction.Left; }
 }
 
+/// Implemented as Singleton - makes it easy (+ cheap) to create this
+/// object on every update iteration
 class SpeedGenerator {
     final Logger _logger = new Logger('spaceinvaders.SpeedGenerator');
     final math.Random _random = new math.Random();
@@ -652,7 +657,7 @@ void init(final FrameHandler frameHandler, final ScreenSize screensize, final Sp
 
 }
 
-void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
+bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         final InputHandler inputHandler, final ScreenSize screensize) {
 
     final SpeedGenerator speed = new SpeedGenerator();
@@ -693,17 +698,18 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         final Bullet bullet = spritefactory.bullet;
         bullet.x = spritefactory.tank.x + spritefactory.tank.width ~/ 2;
         bullet.y = spritefactory.tank.y;
+        bullet.velocity = speed.getSpeed(2,8);
         spritefactory.magazin.addBullet(bullet);
     }
 
     void _changeDirection(final Direction direction) {
-        // spritefactory.swarm.moveDown();
+        spritefactory.swarm.moveDown();
         frameHandler.toggleDirection();
 
         // Make sure we move straight down! (undo the previous horizontal movement)
         direction == Direction.Right ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
 
-        // frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+        frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
     }
 
     // Moves the sprites down (toggle)
@@ -718,11 +724,14 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         }
     });
 
+    // Looks more realistic if this check is before the next "fire" command
     spritefactory.magazin.checkIfCityIsHit(spritefactory.cities);
 
-    spritefactory.magazin.fire(speed: speed.getSpeed(2,7));
+    spritefactory.magazin.fire();
     spritefactory.magazin.checkIfAlienIsHit(spritefactory.swarm.aliens);
     spritefactory.magazin.removeFailedBullets(screensize.height);
+
+    return true;
 }
 
 void render(final Screen screen,final SpriteFactory spritefactory) {
