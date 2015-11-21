@@ -185,7 +185,7 @@ class SpriteFactory {
 
     List<City> _createCities() {
         List<City> cities = new List<City>();
-        [1,2,3].forEach((_) {
+        [1,2,3,4].forEach((_) {
             cities.add(new City(new Sprite(_image,84, 8, 36, 24)));
         });
         return cities;
@@ -619,6 +619,22 @@ class FrameHandler {
     void toggleDirection() { _direction = _direction == Direction.Left ? Direction.Right : Direction.Left; }
 }
 
+class SpeedGenerator {
+    final Logger _logger = new Logger('spaceinvaders.SpeedGenerator');
+    final math.Random _random = new math.Random();
+
+    static final SpeedGenerator _speedgenerator = new SpeedGenerator._internal();
+    factory SpeedGenerator() => _speedgenerator;
+
+    int getSpeed(final int min,final int max) {
+        var speed = _random.nextInt(max - (max - min))+(max - min) + 1;
+        //_logger.info("S $speed");
+        return speed;
+    }
+
+    SpeedGenerator._internal();
+}
+
 void init(final FrameHandler frameHandler, final ScreenSize screensize, final SpriteFactory spritefactory) {
     frameHandler.updateFrequency = 30;
 
@@ -639,7 +655,8 @@ void init(final FrameHandler frameHandler, final ScreenSize screensize, final Sp
 void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         final InputHandler inputHandler, final ScreenSize screensize) {
 
-    final int tankSpeed = 5;
+    final SpeedGenerator speed = new SpeedGenerator();
+    final int tankSpeed = speed.getSpeed(2,7);
 
     if (inputHandler.isDown(KeyCode.Left)) {
 
@@ -703,7 +720,7 @@ void update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
 
     spritefactory.magazin.checkIfCityIsHit(spritefactory.cities);
 
-    spritefactory.magazin.fire(speed: 20);
+    spritefactory.magazin.fire(speed: speed.getSpeed(2,7));
     spritefactory.magazin.checkIfAlienIsHit(spritefactory.swarm.aliens);
     spritefactory.magazin.removeFailedBullets(screensize.height);
 }
