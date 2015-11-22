@@ -336,6 +336,22 @@ class Swarm extends ScreenObject implements Drawable {
         _updatePosition();
     }
 
+    UnmodifiableListView<Alien> getFrontAliens() {
+        final List<Alien> front = new List<Alien>();
+        for(int colIndex = 0;colIndex < COLS; colIndex++) {
+            for(int rowIndex = ROWS;rowIndex > 0; rowIndex--) {
+                final indexAlien = colIndex + ((rowIndex - 1) * COLS);
+                final Alien alien = aliens[indexAlien];
+                if(!alien.killed) {
+                    front.add(alien);
+                    break;
+                }
+            }
+        }
+        //_logger.info("IA ${front.length}");
+
+        return new UnmodifiableListView<Alien>(front);
+    }
 
     // - private ----------------------------------------------------------------------------------
 
@@ -451,6 +467,10 @@ class Cities extends ScreenObject implements Drawable {
 
     Painter get painter => (_painter ?? (_painter = new Painter(_context)));
 
+    // TODO: implement sprite
+    @override
+    Sprite get sprite => null;
+
     bool isCityHit(final Bullet bullet) {
         final int canvasOffset = y; // transform y value to local coordinate system
         final math.Rectangle rectBullet = new math.Rectangle(bullet.x,bullet.y,bullet.width,(bullet.height ~/ 2));
@@ -483,6 +503,7 @@ class Cities extends ScreenObject implements Drawable {
             _cities[cityIndex].y = cityYPos;
         }
     }
+
 }
 
 class Bullet extends ScreenObject with MoveVertical implements Drawable {
@@ -702,14 +723,33 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         spritefactory.magazin.addBullet(bullet);
     }
 
+    void _chooseAlienToFire() {
+        final UnmodifiableListView<Alien> aliensInFront = spritefactory.swarm.getFrontAliens();
+        final math.Random _random = new math.Random();
+
+        if(aliensInFront.length == 0) {
+            return;
+        }
+        int randomAlien = 0;
+        if(aliensInFront.length > 1) {
+            randomAlien = _random.nextInt(aliensInFront.length);
+        }
+        final Alien alien = aliensInFront[randomAlien];
+        final Bullet bullet = spritefactory.bullet;
+        bullet.x = alien.x + alien.width ~/ 2;
+        bullet.y = alien.y + (bullet.height * 1.5).toInt();
+        bullet.velocity = speed.getSpeed(2,4) * -1;
+        spritefactory.magazin.addBullet(bullet);
+    }
+
     void _changeDirection(final Direction direction) {
-        spritefactory.swarm.moveDown();
+        // spritefactory.swarm.moveDown();
         frameHandler.toggleDirection();
 
         // Make sure we move straight down! (undo the previous horizontal movement)
         direction == Direction.Right ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
 
-        frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+        // frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
     }
 
     // Moves the sprites down (toggle)
@@ -722,7 +762,11 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         } else if(spritefactory.swarm.x <= 10) {
             _changeDirection(direction);
         }
+
+        _chooseAlienToFire();
     });
+
+
 
     // Looks more realistic if this check is before the next "fire" command
     spritefactory.magazin.checkIfCityIsHit(spritefactory.cities);
