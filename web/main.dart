@@ -9,6 +9,7 @@ import 'package:logging/logging.dart';
 
 final Logger _logger = new Logger('layout-header-drawer-footer');
 
+/// Paints on the Canvas
 class Painter {
     final Logger _logger = new Logger('spaceinvaders.Painter');
 
@@ -32,13 +33,37 @@ class Painter {
             drawable.sprite._height);
     }
 
-    void drawImage(final dom.CanvasImageSource source,final num destX,final num destY) {
-        _context.drawImage(source,destX,destY);
+    void drawImage(final ImagePainter imagePainter,final num destX,final num destY) {
+        _context.drawImage(imagePainter._canvas,destX,destY);
     }
 
     void save() { _context.save(); }
     void restore() { _context.restore(); }
 
+}
+
+class ImagePainter extends Painter {
+    final Logger _logger = new Logger('spaceinvaders.CityPainter');
+
+    final dom.CanvasElement _canvas;
+
+    factory ImagePainter(final int width,final int height) {
+        return new ImagePainter._internal(new dom.CanvasElement(width: width,height: height));
+    }
+
+    ImagePainter._internal(final dom.CanvasElement canvas) : _canvas = canvas, super(canvas.getContext("2d")) {
+        _logger.info("CityPainter created!");
+    }
+
+    void drawImage(final dom.CanvasImageSource source,final num destX,final num destY) {
+        _context.drawImage(source,destX,destY);
+    }
+
+    void clearRect(int x,int y,int width, int height) {
+        _context.clearRect(x,y,width, height);
+    }
+
+    dom.ImageData getImageData(int x,int y,int width, int height) => _context.getImageData(x,y,width,height);
 }
 
 class ScreenSize {
@@ -48,7 +73,7 @@ class ScreenSize {
 }
 
 /// Abstracted canvas class useful in games
-/// Implemented as Singleton so that we can "construct" it multible times
+/// Implemented as Singleton so that we can "construct" it multiple times
 class Screen {
     final Logger _logger = new Logger('spaceinvaders.Screen');
 
@@ -367,10 +392,9 @@ class Swarm extends ScreenObject implements Drawable {
     }
 
     Alien closestAlien() {
-        final UnmodifiableListView<Alien> alive = aliensAlive();
         Alien closest;
         int yPos = 0;
-        aliens.forEach((final Alien alien) {
+        aliensAlive().forEach((final Alien alien) {
             if(alien.y > yPos) {
                 closest = alien;
                 yPos = alien.y;
@@ -428,22 +452,18 @@ class Cities extends ScreenObject implements Drawable {
     int _width;
     int _height;
 
-    final dom.CanvasElement _canvas;
-    dom.CanvasRenderingContext2D _context;
-    Painter _painter;
+    ImagePainter _imagePainter;
 
     int cycles = 0;
 
     final UnmodifiableListView<City> _cities;
 
-    Cities(this._cities) : _canvas = new dom.CanvasElement() {
+    Cities(this._cities) {
         final ScreenSize size = (new Screen()).size;
         _width = size.width;
         _height = _cities.first.height;
 
-        _canvas.width = width;
-        _canvas.height = height;
-        _context = _canvas.getContext("2d");
+        _imagePainter = new ImagePainter(_width,_height);
     }
 
     int get length => _cities.length;
@@ -454,7 +474,6 @@ class Cities extends ScreenObject implements Drawable {
 
     set width(final int value) {
         _width = value;
-        _canvas.width = _width;
         _updateCityPosition();
     }
 
@@ -462,11 +481,11 @@ class Cities extends ScreenObject implements Drawable {
     void draw(final Painter screenPainter) {
         if(cycles < 5) {
             screenPainter.save();
-            _cities.forEach((final City city) => city.draw(painter));
+            _cities.forEach((final City city) => city.draw(_imagePainter));
             screenPainter.restore();
             cycles++;
         }
-        screenPainter.drawImage(_canvas,0,y);
+        screenPainter.drawImage(_imagePainter,0,y);
     }
 
     // Create damage effect on city-canvas
@@ -476,23 +495,22 @@ class Cities extends ScreenObject implements Drawable {
         y = y.toInt();
 
         // draw damage effect to canvas
-        _context.clearRect(x - 2, y - 2, 4, 4);
-        _context.clearRect(x + 2, y - 4, 2, 4);
-        _context.clearRect(x + 4, y, 2, 2);
-        _context.clearRect(x + 2, y + 2, 2, 2);
-        _context.clearRect(x - 4, y + 2, 2, 2);
-        _context.clearRect(x - 6, y, 2, 2);
-        _context.clearRect(x - 4, y - 4, 2, 2);
-        _context.clearRect(x - 2, y - 6, 2, 2);
+        _imagePainter.clearRect(x - 2, y - 2, 4, 4);
+        _imagePainter.clearRect(x + 2, y - 4, 2, 4);
+        _imagePainter.clearRect(x + 4, y, 2, 2);
+        _imagePainter.clearRect(x + 2, y + 2, 2, 2);
+        _imagePainter.clearRect(x - 4, y + 2, 2, 2);
+        _imagePainter.clearRect(x - 6, y, 2, 2);
+        _imagePainter.clearRect(x - 4, y - 4, 2, 2);
+        _imagePainter.clearRect(x - 2, y - 6, 2, 2);
 
-//        final ScreenSize size = (new Screen()).size;
-//
-//        _context.setStrokeColorRgb(0,255,0);
-//        _context.rect(x,y,6,6);
-//        _context.stroke();
+        // final ScreenSize size = (new Screen()).size;
+        //
+        // _context.setStrokeColorRgb(0,255,0);
+        // _context.rect(x,y,6,6);
+        // _context.stroke();
     }
 
-    Painter get painter => (_painter ?? (_painter = new Painter(_context)));
 
     // TODO: implement sprite
     @override
@@ -508,7 +526,7 @@ class Cities extends ScreenObject implements Drawable {
             if(rectCity.intersects(rectBullet)) {
 
                 // get image-data and check if opaque
-                final dom.ImageData data = _context.getImageData(bullet.x, bullet.y - canvasOffset, 1, 1);
+                final dom.ImageData data = _imagePainter.getImageData(bullet.x, bullet.y - canvasOffset, 1, 1);
                 if (data.data[3] != 0) {
                     damage(bullet.x, bullet.y - canvasOffset);
                     return true;
