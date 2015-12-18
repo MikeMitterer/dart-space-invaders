@@ -213,7 +213,7 @@ class MoveVertical{
 }
 
 class ValidRegion {
-    final math.Rectangle _region = new math.Rectangle(0,0,0,0);
+    // final math.Rectangle _region = new math.Rectangle(0,0,0,0);
 }
 
 abstract class ScreenObject implements Drawable {
@@ -222,10 +222,15 @@ abstract class ScreenObject implements Drawable {
 
     int get width => sprite._width;
     int get height => sprite._height;
+
+    math.Rectangle<num> get rect => new math.Rectangle<num>(x,y,width,height);
+    bool collidesWith(final ScreenObject so) => rect.intersects(so.rect);
 }
 
 class Tank extends ScreenObject with MoveHorizontale,MoveVertical implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Tank');
+
+    int hits = 0;
 
     final Sprite _sprite;
 
@@ -235,7 +240,6 @@ class Tank extends ScreenObject with MoveHorizontale,MoveVertical implements Dra
 
     @override
     Sprite get sprite => _sprite;
-
 }
 
 class Alien extends ScreenObject implements Drawable {
@@ -309,6 +313,11 @@ class Swarm extends ScreenObject implements Drawable {
         _updatePosition();
     }
 
+    void moveUp() {
+        _y -= aliens.first.height;
+        _updatePosition();
+    }
+
     void moveDown() {
         _y += aliens.first.height;
         _updatePosition();
@@ -352,6 +361,24 @@ class Swarm extends ScreenObject implements Drawable {
 
         return new UnmodifiableListView<Alien>(front);
     }
+
+    UnmodifiableListView<Alien> aliensAlive() {
+        return new UnmodifiableListView<Alien>(aliens.where((final Alien alien) => !alien.killed));
+    }
+
+    Alien closestAlien() {
+        final UnmodifiableListView<Alien> alive = aliensAlive();
+        Alien closest;
+        int yPos = 0;
+        aliens.forEach((final Alien alien) {
+            if(alien.y > yPos) {
+                closest = alien;
+                yPos = alien.y;
+            }
+        });
+        return closest;
+    }
+
 
     // - private ----------------------------------------------------------------------------------
 
@@ -545,6 +572,7 @@ class Magazin {
 
     void checkIfAlienIsHit(final UnmodifiableListView<Alien> aliens) {
         aliens.where((final Alien alien) => !alien.killed).forEach((final Alien alien) {
+
             final math.Rectangle rectAlien = new math.Rectangle(alien.x,alien.y,alien.width,alien.height);
 
             for(int index = 0;index < _bullets.length;index++) {
@@ -563,6 +591,17 @@ class Magazin {
         for(int index = 0;index < _bullets.length;index++) {
             final Bullet bullet = _bullets[index];
             if(cities.isCityHit(bullet)) {
+                _bullets.remove(bullet);
+                break;
+            }
+        }
+    }
+
+    void checkIfTankIsHit(final Tank tank) {
+        for(int index = 0;index < _bullets.length;index++) {
+            final Bullet bullet = _bullets[index];
+            if(tank.collidesWith(bullet)) {
+                tank.hits++;
                 _bullets.remove(bullet);
                 break;
             }
@@ -684,41 +723,48 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
     final SpeedGenerator speed = new SpeedGenerator();
     final int tankSpeed = speed.getSpeed(2,7);
 
+    final bool swarmAutoMove = true;
+
+    // Only for debugging
+    final bool tankCanMoveVertically = false;
+
+    // Only for debugging
+    final bool swarmCanMoveUpAndDown = true && !tankCanMoveVertically;
+
+    final Tank tank = spritefactory.tank;
     if (inputHandler.isDown(KeyCode.Left)) {
 
-        spritefactory.tank.moveLeft(speed: tankSpeed);
+        tank.moveLeft(speed: tankSpeed);
     }
     else if (inputHandler.isDown(KeyCode.Right)) {
 
-        spritefactory.tank.moveRight(speed: tankSpeed);
+        tank.moveRight(speed: tankSpeed);
 
-    } else if(inputHandler.isDown(KeyCode.Up)) {
+    } else if(inputHandler.isDown(KeyCode.Up) && tankCanMoveVertically) {
 
-        spritefactory.tank.moveUp(speed: tankSpeed);
+        tank.moveUp(speed: tankSpeed);
 
-    } else if(inputHandler.isDown(KeyCode.Down)) {
+    } else if(inputHandler.isDown(KeyCode.Down) && tankCanMoveVertically) {
 
-        spritefactory.tank.moveDown(speed: tankSpeed);
+        tank.moveDown(speed: tankSpeed);
     }
+    tank.x = math.min(math.max(tank.x,0),screensize.width - tank.width);
+    tank.y = math.min(math.max(tank.y,0),screensize.height - tank.height);
 
-//    if(inputHandler.isPressed(KeyCode.Down)) {
-//
-//        spritefactory.swarm.moveDown();
-//
-//    } else if(inputHandler.isPressed(KeyCode.Left)) {
-//
-//        spritefactory.swarm.moveLeft();
-//
-//    } else if(inputHandler.isPressed(KeyCode.Right)) {
-//
-//        spritefactory.swarm.moveRight();
-//
-//    }
+    if(inputHandler.isPressed(KeyCode.Up) && swarmCanMoveUpAndDown) {
+
+        spritefactory.swarm.moveUp();
+
+    } else if(inputHandler.isPressed(KeyCode.Down) && swarmCanMoveUpAndDown) {
+
+        spritefactory.swarm.moveDown();
+
+    }
 
     if(inputHandler.isPressed(KeyCode.Space)) {
         final Bullet bullet = spritefactory.bullet;
         bullet.x = spritefactory.tank.x + spritefactory.tank.width ~/ 2;
-        bullet.y = spritefactory.tank.y;
+        bullet.y = spritefactory.tank.y - (bullet.height * 1.1).toInt();
         bullet.velocity = speed.getSpeed(2,8);
         spritefactory.magazin.addBullet(bullet);
     }
@@ -743,13 +789,17 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
     }
 
     void _changeDirection(final Direction direction) {
-        // spritefactory.swarm.moveDown();
+        if(swarmAutoMove) {
+            spritefactory.swarm.moveDown();
+        }
         frameHandler.toggleDirection();
 
         // Make sure we move straight down! (undo the previous horizontal movement)
         direction == Direction.Right ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();
 
-        // frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+        if(swarmAutoMove) {
+             frameHandler.updateFrequency = frameHandler.updateFrequency - 1;
+        }
     }
 
     // Moves the sprites down (toggle)
@@ -766,7 +816,7 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
         _chooseAlienToFire();
     });
 
-
+    spritefactory.magazin.checkIfTankIsHit(spritefactory.tank);
 
     // Looks more realistic if this check is before the next "fire" command
     spritefactory.magazin.checkIfCityIsHit(spritefactory.cities);
@@ -776,6 +826,24 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
     spritefactory.magazin.removeFailedBullets(screensize.height);
 
     return true;
+}
+
+enum GameState {  Continue, YouLost, YouWon }
+
+GameState checkGameState(final SpriteFactory spritefactory) {
+    if(spritefactory.swarm.aliensAlive().length == 0) {
+        return GameState.YouWon;
+    }
+
+    if(spritefactory.tank.hits >= 3) {
+        return GameState.YouLost;
+    }
+
+    if(spritefactory.swarm.closestAlien().collidesWith(spritefactory.cities)) {
+        return GameState.YouLost;
+    }
+
+    return GameState.Continue;
 }
 
 void render(final Screen screen,final SpriteFactory spritefactory) {
@@ -808,6 +876,20 @@ main() {
 
         update(frameHandler,spritefactory,inputHandler,screensize);
         render(screen,spritefactory);
+
+        switch(checkGameState(spritefactory)) {
+            case GameState.YouWon:
+                _logger.info("You won!!!!!!");
+                return;
+
+            case GameState.YouLost:
+                _logger.info("You lost - sorry!");
+                return;
+
+            case GameState.Continue:
+            default:
+                break;
+        }
 
         dom.window.requestAnimationFrame((_) => loop());
     }
