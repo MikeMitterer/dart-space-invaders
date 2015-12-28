@@ -18,5 +18,9 @@ dependencies:
 
   di: any
 
+dev_dependencies:
+  test: ^0.12.0
+  grinder: ^0.8.0
+
 transformers:
   - di
