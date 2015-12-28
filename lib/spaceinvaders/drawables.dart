@@ -19,26 +19,35 @@
      
 part of spaceinvaders;
 
+/// Base class for all the drawable (paintable) objects on the screen.
+///
+/// [Painter] uses this class for doing it's job
 abstract class Drawable {
+    /// The image that represents this [Drawable]
     Sprite get sprite;
+
     int get x;
     int get y;
 
     void draw(final Painter painter);
 }
 
+/// Mixin to move an object horizontally
 class MoveHorizontale {
     int x = 0;
     void moveLeft({ final int speed: 1}) { x -= speed; }
     void moveRight({ final int speed: 1}) { x += speed; }
 }
 
+/// Mixin to move an object vertically
 class MoveVertical{
     int y = 0;
     void moveUp({ final int speed: 1}) { y -= speed; }
     void moveDown({ final int speed: 1}) { y += speed; }
 }
 
+/// More or less a base implementation of [Drawable] plus
+/// with + height.
 abstract class ScreenObject implements Drawable {
 
     void draw(final Painter painter) { painter.draw(this); }
@@ -46,10 +55,14 @@ abstract class ScreenObject implements Drawable {
     int get width => sprite._width;
     int get height => sprite._height;
 
+    /// Describes the [Drawable] as [Rectangle]
     math.Rectangle<num> get rect => new math.Rectangle<num>(x,y,width,height);
+
+    /// Collision detection
     bool collidesWith(final ScreenObject so) => rect.intersects(so.rect);
 }
 
+/// The Tank can move left and right and shoots the [Alien]s
 class Tank extends ScreenObject with MoveHorizontale,MoveVertical implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Tank');
 
@@ -65,6 +78,7 @@ class Tank extends ScreenObject with MoveHorizontale,MoveVertical implements Dra
     Sprite get sprite => _sprite;
 }
 
+/// The enemy - the Aliens are organized in a [Swarm]
 class Alien extends ScreenObject implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Alien');
 
@@ -92,6 +106,7 @@ class Alien extends ScreenObject implements Drawable {
     }
 }
 
+/// Collection of [Alien]s
 class Swarm extends ScreenObject implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Swarm');
 
@@ -189,6 +204,7 @@ class Swarm extends ScreenObject implements Drawable {
         return new UnmodifiableListView<Alien>(aliens.where((final Alien alien) => !alien.killed));
     }
 
+    /// Looks for the frontmost [Alien]
     Alien closestAlien() {
         Alien closest;
         int yPos = 0;
@@ -227,6 +243,7 @@ class Swarm extends ScreenObject implements Drawable {
     }
 }
 
+/// City can be destroyed by [Alien]
 class City extends ScreenObject implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.City');
     int x = 0;
@@ -241,6 +258,10 @@ class City extends ScreenObject implements Drawable {
     int get height => _sprite._height;
 }
 
+/// Holds (and draws!!!!) the [City] objects
+///
+/// Cities are drawn on [ImagePainter]. This makes it possible
+/// to destroy parts of a [City]
 class Cities extends ScreenObject implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Cities');
 
@@ -351,6 +372,8 @@ class Cities extends ScreenObject implements Drawable {
 
 }
 
+/// Bullet fired either by an [Alien] or by the [Tank].
+/// A [Magazin] is used to hold the [Bullet]s
 class Bullet extends ScreenObject with MoveVertical implements Drawable {
     final Logger _logger = new Logger('spaceinvaders.Bullet');
 

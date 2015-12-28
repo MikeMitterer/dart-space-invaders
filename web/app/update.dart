@@ -19,6 +19,8 @@
 
 part of spaceinvaders.app;
 
+/// All the properties will be updatet. X/Y positions, moving the swarm,
+/// firing [Bullet]s from the [Magazin]
 bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
     final InputHandler inputHandler, final ScreenSize screensize) {
 
@@ -105,6 +107,7 @@ bool update(final FrameHandler frameHandler,final SpriteFactory spritefactory,
     }
 
     // Moves the sprites down (toggle)
+    // The frequency is defined in "init"
     frameHandler.update((final Direction direction) {
         spritefactory.swarm.toggle();
         direction == Direction.Left ? spritefactory.swarm.moveLeft() : spritefactory.swarm.moveRight();

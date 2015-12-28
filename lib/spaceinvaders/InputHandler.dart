@@ -19,6 +19,7 @@
      
 part of spaceinvaders;
 
+/// Abstraction for keycodes typed by the user
 class KeyCode {
     final int code;
     const KeyCode(this.code);
@@ -32,6 +33,7 @@ class KeyCode {
     static const KeyCode Space = const KeyCode(32);
 }
 
+/// Listens for key pressed
 class InputHandler {
     final Logger _logger = new Logger('spaceinvaders.Sprites');
 

@@ -21,6 +21,8 @@ part of spaceinvaders;
 
 enum Direction { Left, Right }
 
+/// Calls the [update]-Function every x-frames.
+/// The the intervall is defined via [updateFrequency]
 class FrameHandler {
     int _frames = 0;
     int _frequency = 30;

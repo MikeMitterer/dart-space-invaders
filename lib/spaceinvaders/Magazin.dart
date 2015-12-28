@@ -19,6 +19,8 @@
      
 part of spaceinvaders;
 
+/// Magazin holds and fires all the [Bullet]s fire by either an [Alien]
+/// or by the [Tank]
 class Magazin {
     final List<Bullet> _bullets = new List<Bullet>();
 

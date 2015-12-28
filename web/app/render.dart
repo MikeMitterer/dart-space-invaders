@@ -19,12 +19,15 @@
 
 part of spaceinvaders.app;
 
+/// Draws all the [Drawables]. [Screen] returns a [Painter] that is used for
+/// all the drawing operations
 void render(final Screen screen,final SpriteFactory spritefactory) {
     screen.clear();
 
     final Painter painter = screen.painter;
 
     spritefactory.tank.draw(painter);
+
     spritefactory.swarm.draw(painter);
 
     spritefactory.cities.draw(painter);

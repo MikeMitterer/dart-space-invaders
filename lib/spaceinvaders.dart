@@ -16,14 +16,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-     
+
+/// The classic Space Invaders game written in Dart.
 library spaceinvaders;
 
 import 'dart:collection';
 import 'dart:html' as dom;
 import 'dart:math' as math;
 
-import 'package:console_log_handler/console_log_handler.dart';
 import 'package:logging/logging.dart';
 
 part 'spaceinvaders/drawables.dart';

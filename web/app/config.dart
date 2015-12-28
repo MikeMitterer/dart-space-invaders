@@ -19,6 +19,7 @@
 
 part of spaceinvaders.app;
 
+/// Minimal Log-Configuration
 void configLogging() {
     hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
 

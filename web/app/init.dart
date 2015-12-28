@@ -19,6 +19,8 @@
      
 part of spaceinvaders.app;
 
+/// Initializes the game - means sets the initial values for [FrameHandler] and so forth.
+/// Defines the base-positions for all the [Drawables] like [Tank], [Swarm]...
 void init(final FrameHandler frameHandler, final ScreenSize screensize, final SpriteFactory spritefactory) {
     frameHandler.updateFrequency = 30;
 
