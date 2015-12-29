@@ -70,7 +70,12 @@ class Screen {
             _canvas.height = _height;
 
             _context = _canvas.getContext("2d");
-            dom.document.body.append(_canvas);
+            final dom.Element game = dom.querySelector("#game");
+            if(game != null) {
+                game.append(_canvas);
+            } else {
+                dom.document.body.append(_canvas);
+            }
         }
     }
 
