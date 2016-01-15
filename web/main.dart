@@ -10,6 +10,7 @@ import 'package:logging/logging.dart';
 import 'package:mdl/mdl.dart';
 
 import 'package:spaceinvaders/spaceinvaders.dart';
+import 'package:spaceinvaders/components.dart';
 
 part 'app/config.dart';
 
@@ -22,6 +23,8 @@ main() async {
 
     configLogging();
     registerMdl();
+    registerSpaceInvaderComponents();
+
     await componentFactory().run();
 
     final InputHandler inputHandler = new InputHandler()..create();

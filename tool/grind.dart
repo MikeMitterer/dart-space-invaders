@@ -1,9 +1,11 @@
 import 'package:grinder/grinder.dart';
 
+import 'package:path/path.dart' as path;
+
 main(args) => grind(args);
 
 @Task()
-@Depends(test)
+@Depends(genCss, test)
 build() {
   Pub.build();
 }
@@ -31,6 +33,17 @@ analyze() {
     Analyzer.analyze("web/main.dart");
 
     Analyzer.analyze("test");
+}
+
+@Task()
+genCss() {
+    final String src = "lib/assets/styles/main.scss";
+    final String target = "${path.withoutExtension(src)}.css";
+    final String mini = "${path.withoutExtension(src)}.min.css";
+
+    run("sassc", arguments: [ src, target ] );
+    run("autoprefixer", arguments: [ target ] );
+    run("minify", arguments: [ "--output", mini, target ]);
 }
 
 @Task()
