@@ -44,8 +44,10 @@ class ArcadeButtonComponent extends MdlComponent {
     //static const _ArcadeButtonComponentConstant _constant = const _ArcadeButtonComponentConstant();
     static const _ArcadeButtonComponentCssClasses _cssClasses = const _ArcadeButtonComponentCssClasses();
 
+    final SpaceInvadersStore _store;
+
     ArcadeButtonComponent.fromElement(final dom.HtmlElement element,final di.Injector injector)
-        : super(element,injector) {
+        : _store = injector.get(SpaceInvadersStore), super(element,injector) {
         
         _init();
         
@@ -69,6 +71,11 @@ class ArcadeButtonComponent extends MdlComponent {
         final dom.DivElement knob = new dom.DivElement();
         knob.classes.add(_cssClasses.KNOB);
         element.append(knob);
+
+        eventStreams.add(
+            knob.onClick.listen((_) {
+                _store.fire(new StartGameAction());
+            }));
         
         element.classes.add(_cssClasses.IS_UPGRADED);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Michael Mitterer (office@mikemitterer.at),
+ * Copyright (c) 2016, Michael Mitterer (office@mikemitterer.at),
  * IT-Consulting and Development Limited.
  * 
  * All Rights Reserved.
@@ -17,29 +17,7 @@
  * limitations under the License.
  */
 
-/// The classic Space Invaders game written in Dart.
-library spaceinvaders;
+library spaceinvaders.gamestate;
 
-import 'dart:collection';
-import 'dart:html' as dom;
-import 'dart:math' as math;
-
-import 'package:logging/logging.dart';
-
-part 'spaceinvaders/drawables.dart';
-part 'spaceinvaders/painter.dart';
-part 'spaceinvaders/screen.dart';
-part 'spaceinvaders/sprite.dart';
-
-part 'spaceinvaders/FrameHandler.dart';
-part 'spaceinvaders/InputHandler.dart';
-part 'spaceinvaders/Magazin.dart';
-part 'spaceinvaders/SpeedGenerator.dart';
-part 'spaceinvaders/SpriteFactory.dart';
-
-
-
-
-
-
-
+/// GameState indicator
+enum GameState {  Continue, YouLost, YouWon, Idle }

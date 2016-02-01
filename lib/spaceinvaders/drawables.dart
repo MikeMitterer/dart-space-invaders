@@ -178,6 +178,11 @@ class Swarm extends ScreenObject implements Drawable {
     @override
     int get width => _width;
 
+    /// Bring new life to Alien (after Game restart)
+    void resuscitate() {
+        aliens.forEach((final Alien alien) => alien.killed = false);
+    }
+
     void set width(final int value) {
         _width = value;
         _updatePosition();
@@ -273,7 +278,7 @@ class Cities extends ScreenObject implements Drawable {
 
     ImagePainter _imagePainter;
 
-    int cycles = 0;
+    int buildCycle = 0;
 
     final UnmodifiableListView<City> _cities;
 
@@ -298,13 +303,13 @@ class Cities extends ScreenObject implements Drawable {
 
     @override
     void draw(final Painter painter) {
-        if(cycles < 5) {
+        if(buildCycle < 5) {
             painter.save();
             // Draw it only on the first few cycles. This makes sure that
             // we can later on "damage" this layer
             _cities.forEach((final City city) => city.draw(_imagePainter));
             painter.restore();
-            cycles++;
+            buildCycle++;
         }
         painter.drawImage(_imagePainter,0,y);
     }

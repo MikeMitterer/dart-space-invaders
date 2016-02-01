@@ -95,7 +95,15 @@
             }
 
             .control-panel {
+                flex-grow: 1;
                 padding-left: 12px;
+
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: flex-start; // ↓
+                align-content: space-between; // =
+                align-items: center; // ⇾
             }
         }
 

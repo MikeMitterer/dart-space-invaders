@@ -24,11 +24,22 @@ part of spaceinvaders.app;
 void init(final FrameHandler frameHandler, final ScreenSize screensize, final SpriteFactory spritefactory) {
     frameHandler.updateFrequency = 30;
 
+    void _resetGameState() {
+        spritefactory.tank.hits = 0;
+
+        spritefactory.swarm.resuscitate();
+        spritefactory.swarm.y = 0;
+
+        spritefactory.cities.buildCycle = 0;
+    }
+
+    _resetGameState();
+
     // Start at pos 20 and at the bottom of the screen
     spritefactory.tank.x = 20;
     spritefactory.tank.y = screensize.height - spritefactory.tank.height * 2;
 
-    spritefactory.cities.x = 20;
+
     spritefactory.cities.y = spritefactory.tank.y - spritefactory.cities.height * 2;
     spritefactory.cities.width = screensize.width - 40;
 
