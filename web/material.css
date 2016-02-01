@@ -10329,6 +10329,12 @@ mdl-draggable {
  * limitations under the License.
  */
 /* DIALOG */
+.arcade {
+  color: #FBE165;
+  font-family: 'Press Start 2P', cursive; }
+  .arcade.large {
+    font-size: 24px; }
+
 .mdlx-arcade-button {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
