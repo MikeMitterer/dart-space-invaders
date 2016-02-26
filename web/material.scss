@@ -24,6 +24,34 @@
 #spaceinvaders {
     background-color: #2657CA !important;
 
+    .title {
+        color: #fffc00;
+
+        opacity : 0;
+
+        position: absolute;
+        top: calc(100vh / 8);
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start; // ↓
+        align-content: center; // =
+        align-items: center; // ⇾
+
+        z-index : 2;
+
+        font-size: 50px;
+
+        img {
+            display: block;
+            padding: 36px;
+
+            -webkit-filter : drop-shadow(7px 6px 7px rgba(255, 236, 32, 0.5));
+        }
+    }
+
     .mdl-layout__header {
         background-image: url("images/banner.jpg");
         background-position: left bottom;
@@ -73,6 +101,9 @@
 
 
         section.game-container {
+            opacity: 0;
+            &.ready { opacity: 1; }
+
             flex-grow: 1;
             border-radius: 2px;
 

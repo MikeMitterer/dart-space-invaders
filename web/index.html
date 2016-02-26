@@ -50,11 +50,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 
+    <link rel="stylesheet" href="packages/mdl/assets/styles/splashscreen/dots.min.css">
     <link id="theme" rel="stylesheet" href="material.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body id="spaceinvaders">
+<body class="mdl-upgrading" id="spaceinvaders">
+<div class="mdl-splashscreen mdl-splashscreen--opacity-90 mdl-color--black">
+    <div class="spinner">
+        <div class="dot1 mdl-color--cyan"></div><div class="dot2 mdl-color--yellow"></div>
+    </div>
+</div>
 <div class="mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+
+    <div class="title arcade">
+        Space
+        <img src="images/dart-invader.png">
+        Invaders
+    </div>
     <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-800 mdl-shadow--4dp">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title"></span>
@@ -70,7 +82,7 @@
             <div class="control-panel">
                 <p class="arcade large mdl-color-text--white">GAME OVER</p>
                 <p class="arcade mdl-color-text--yellow-200">You lost!</p>
-                <button class="mdlx-arcade-button"></button>
+                <mdlx-arcade-button></mdlx-arcade-button>
                 <p class="arcade mdl-color-text--yellow-500">Press Start</p>
             </div>
 

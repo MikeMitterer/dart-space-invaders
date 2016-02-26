@@ -1,5 +1,6 @@
 library spaceinvaders.app;
 
+import 'dart:async';
 import 'dart:collection';
 import 'dart:html' as dom;
 import 'dart:math' as math;
@@ -10,6 +11,7 @@ import 'package:logging/logging.dart';
 import 'package:validate/validate.dart';
 
 import 'package:mdl/mdl.dart';
+import 'package:mdl/mdlanimation.dart';
 
 import 'package:spaceinvaders/components/interface/actions.dart';
 import 'package:spaceinvaders/components/interface/stores.dart';
@@ -24,6 +26,13 @@ part 'app/config.dart';
 part 'app/init.dart';
 part 'app/update.dart';
 part 'app/render.dart';
+
+final MdlAnimation bounceIn = new MdlAnimation.fromStock(
+    StockAnimation.BounceInBottom.change(duration: new Duration(milliseconds: 800)));
+
+final MdlAnimation fadeOut = new MdlAnimation.fromStock(StockAnimation.FadeOut);
+
+final MdlAnimation flushRight = new MdlAnimation.fromStock(StockAnimation.FlushRight);
 
 GameState checkGameState(final SpriteFactory spritefactory) {
     if(spritefactory.swarm.aliensAlive().length == 0) {
@@ -43,7 +52,7 @@ GameState checkGameState(final SpriteFactory spritefactory) {
 
 @MdlComponentModel @di.Injectable()
 class Application extends MaterialApplication {
-    // final Logger _logger = new Logger('spaceinvaders.Application');
+    final Logger _logger = new Logger('spaceinvaders.Application');
 
     final SpaceInvadersStore _store;
 
@@ -84,6 +93,15 @@ class Application extends MaterialApplication {
         }
 
         _gameLoop();
+
+        bounceIn(dom.querySelector(".title")).then((_) {
+            new Future.delayed(new Duration(milliseconds: 1200),() {
+                flushRight(dom.querySelector(".title")).then((_) {
+                    dom.querySelector(".game-container").classes.add("ready");
+                    _logger.info("Animation completed!");
+                });
+            });
+        });
     }
 
     // - private -------------------------------------------------------------------------------------------------------

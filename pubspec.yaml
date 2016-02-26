@@ -10,7 +10,9 @@ environment:
 dependencies:
   browser: any
 
-  mdl: '>=1.0.0 <2.0.0'
+  mdl:
+    #'>=1.0.0 <2.0.0'
+    path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
 
   logging: any
   logging_handlers: any
