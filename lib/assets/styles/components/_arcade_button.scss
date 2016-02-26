@@ -1,4 +1,4 @@
-$arcade-button-color : #ff0000 !default;
+$arcade-button-color : #0000ff !default;
 $arcade-button-size : 80px !default;
 
 // Private function to handle the button-size
@@ -11,11 +11,13 @@ $arcade-button-size : 80px !default;
 // - More: http://codepen.io/MikeMitterer/pen/RrLaPe
 //
 .mdlx-arcade-button {
-    display         : inline-flex;
+    display         : flex;
+    user-select     : none;
+
     flex-direction  : row;
     flex-wrap       : wrap;
     justify-content : center; // ⇾
-    align-content   : space-between; // ||
+    align-content   : center; // ||
     align-items     : center; // ↓
 
     width           : $arcade-button-size;
@@ -36,14 +38,14 @@ $arcade-button-size : 80px !default;
     &:focus { outline : none; }
 
     > .mdlx-arcade-button__knob {
+        box-sizing          : border-box;
 
         //position: relative;
         cursor              : pointer;
         width               : $arcade-button-size * 0.6;
         height              : $arcade-button-size * 0.6;
-        //font-size: 30px;
+
         border-radius       : 50%;
-        //padding: _buttonPercent(16.666666);
         border              : darken($arcade-button-color, 15%) 1px solid;
         background-color    : $arcade-button-color;
 

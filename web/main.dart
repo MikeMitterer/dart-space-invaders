@@ -43,7 +43,7 @@ GameState checkGameState(final SpriteFactory spritefactory) {
 
 @MdlComponentModel @di.Injectable()
 class Application extends MaterialApplication {
-    final Logger _logger = new Logger('spaceinvaders.Application');
+    // final Logger _logger = new Logger('spaceinvaders.Application');
 
     final SpaceInvadersStore _store;
 

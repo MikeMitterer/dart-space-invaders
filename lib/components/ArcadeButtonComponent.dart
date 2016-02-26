@@ -66,12 +66,13 @@ class ArcadeButtonComponent extends MdlComponent {
         _logger.info("ArcadeButtonComponent - init");
 
         // Recommended - add SELECTOR as class if this component is a TAG!
-        // element.classes.add(_ArcadeButtonComponentConstant.WIDGET_SELECTOR);
+        element.classes.add(_ArcadeButtonComponentConstant.WIDGET_SELECTOR);
 
         final dom.DivElement knob = new dom.DivElement();
         knob.classes.add(_cssClasses.KNOB);
         element.append(knob);
 
+        _logger.info("K $knob");
         eventStreams.add(
             knob.onClick.listen((_) {
                 _store.fire(new StartGameAction());
@@ -97,7 +98,7 @@ void registerArcadeButtonComponent() {
     // If you want <mdlx-arcade-button></mdlx-arcade-button> set selectorType to SelectorType.TAG.
     // If you want <div mdlx-arcade-button></div> set selectorType to SelectorType.ATTRIBUTE.
     // By default it's used as a class name. (<div class="mdlx-arcade-button"></div>)
-    config.selectorType = SelectorType.CLASS;
+    config.selectorType = SelectorType.TAG;
     
     componentHandler().register(config);
 }
