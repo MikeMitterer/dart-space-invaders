@@ -1,8 +1,8 @@
 name: spaceinvaders
-version: 0.0.1
+version: 1.0.0
 description: Space-Invaders built with Material Design Lite 4 Dart
 author: <Mike Mitterer> <office@mikemitterer.at>
-#homepage: https://www.example.com
+homepage: https://github.com/MikeMitterer/dart-space-invaders
 
 environment:
   sdk: '>=1.0.0 <2.0.0'
@@ -10,9 +10,8 @@ environment:
 dependencies:
   browser: any
 
-  mdl:
-    #'>=1.0.0 <2.0.0'
-    path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
+  mdl: '>=1.0.0 <2.0.0'
+    #path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
 
   logging: any
   logging_handlers: any

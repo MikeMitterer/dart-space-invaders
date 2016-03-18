@@ -32,6 +32,13 @@
  * limitations under the License.
  */
 /* DIALOG */
+/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+/* smartphones, Android phones, landscape iPhone */
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+/* big landscape tablets, laptops, and desktops */
+/* hi-res laptops and desktops */
+/*  According to MD Adaptive UI */
 .arcade {
   color: #FBE165;
   font-family: 'Press Start 2P', cursive; }
@@ -39,10 +46,14 @@
     font-size: 24px; }
 
 .mdlx-arcade-button {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
@@ -51,10 +62,10 @@
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-align-content: center;
       -ms-flex-line-pack: center;
           align-content: center;
@@ -68,32 +79,123 @@
   border-radius: 50%;
   margin: 0;
   padding: 0;
-  background: #dddd00;
-  box-shadow: #999900 0 2.66666px 3.33333px inset, rgba(255, 255, 255, 0.5) 0 8px 3.33333px inset, #666600 0 -3.33333px 3.33333px inset, rgba(0, 0, 0, 0.8) 0 2.66667px 5.33333px;
+  background: #dd0000;
+  box-shadow: #990000 0 2.66666px 3.33333px inset, rgba(255, 255, 255, 0.5) 0 8px 3.33333px inset, #660000 0 -3.33333px 3.33333px inset, rgba(0, 0, 0, 0.8) 0 2.66667px 5.33333px;
   outline: none; }
   .mdlx-arcade-button:focus {
     outline: none; }
   .mdlx-arcade-button > .mdlx-arcade-button__knob {
+    box-sizing: border-box;
     cursor: pointer;
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: #b3b300 1px solid;
-    background-color: #ffff00;
+    border: #b30000 1px solid;
+    background-color: #ff0000;
     outline: none;
-    background-image: -webkit-radial-gradient(24px 24px, circle contain, #ffff00 10px, #ffff1f 20px, #ffff1f 24px, #fafa00 43.328px);
-    background-image: radial-gradient(24px 24px, circle contain, #ffff00 10px, #ffff1f 20px, #ffff1f 24px, #fafa00 43.328px);
+    background-image: -webkit-radial-gradient(24px 24px, circle contain, #ff0000 10px, #ff1f1f 20px, #ff1f1f 24px, #fa0000 43.328px);
+    background-image: radial-gradient(24px 24px, circle contain, #ff0000 10px, #ff1f1f 20px, #ff1f1f 24px, #fa0000 43.328px);
     background-position: center center;
     background-repeat: no-repeat;
-    box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, #ffff99 0 2px 2px inset, #333300 0 5.33328px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33333px 6.66664px inset, rgba(255, 255, 255, 0.24) 0 -1.33333px 2px inset, #666600 0 -4.66666px 13.33328px inset; }
+    box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, #ff9999 0 2px 2px inset, #330000 0 5.33328px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33333px 6.66664px inset, rgba(255, 255, 255, 0.24) 0 -1.33333px 2px inset, #660000 0 -4.66666px 13.33328px inset; }
     .mdlx-arcade-button > .mdlx-arcade-button__knob:focus {
       outline: none; }
     .mdlx-arcade-button > .mdlx-arcade-button__knob:hover {
-      background-image: -webkit-radial-gradient(24px 24px, circle contain, #ffff1a, #ffff33 20px, #ffff33 24px, #ffff1a 43.328px);
-      background-image: radial-gradient(24px 24px, circle contain, #ffff1a, #ffff33 20px, #ffff33 24px, #ffff1a 43.328px);
-      box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, #ffffb3 0 2px 2px inset, #666600 0 5.33328px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33328px 6.66664px inset, rgba(255, 255, 255, 0.4) 0 -2px 2px inset, #666600 0 -4.66666px 13.33328px inset; }
+      background-image: -webkit-radial-gradient(24px 24px, circle contain, #ff1a1a, #ff3333 20px, #ff3333 24px, #ff1a1a 43.328px);
+      background-image: radial-gradient(24px 24px, circle contain, #ff1a1a, #ff3333 20px, #ff3333 24px, #ff1a1a 43.328px);
+      box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, #ffb3b3 0 2px 2px inset, #660000 0 5.33328px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33328px 6.66664px inset, rgba(255, 255, 255, 0.4) 0 -2px 2px inset, #660000 0 -4.66666px 13.33328px inset; }
     .mdlx-arcade-button > .mdlx-arcade-button__knob:active {
       border-color: black;
-      background-image: -webkit-radial-gradient(9.6px 8px, circle contain, #ffff00 10px, #b3b300 20px, #b3b300 24px, #1a1a00 40px);
-      background-image: radial-gradient(9.6px 8px, circle contain, #ffff00 10px, #b3b300 20px, #b3b300 24px, #1a1a00 40px);
-      box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, rgba(0, 0, 0, 0.8) 0 2px 2px inset, #666600 0 5.33333px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33333px 6.66666px inset, rgba(255, 255, 255, 0.3) 0 -1.33333px 2px inset, #666600 0 -4.66666px 13.33328px inset; }
+      background-image: -webkit-radial-gradient(9.6px 8px, circle contain, #ff0000 10px, #b30000 20px, #b30000 24px, #1a0000 40px);
+      background-image: radial-gradient(9.6px 8px, circle contain, #ff0000 10px, #b30000 20px, #b30000 24px, #1a0000 40px);
+      box-shadow: rgba(0, 0, 0, 0.8) 0 0 6.66664px 3.33333px, rgba(0, 0, 0, 0.8) 0 2px 2px inset, #660000 0 5.33333px 6.66664px inset, rgba(0, 0, 0, 0.3) 0 13.33333px 6.66666px inset, rgba(255, 255, 255, 0.3) 0 -1.33333px 2px inset, #660000 0 -4.66666px 13.33328px inset; }
+
+.mdlx-button-label {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 8px; }
+
+.mdlx-status-bar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-align-content: space-between;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: darkgreen;
+  min-height: 28px;
+  max-height: 28px;
+  border-top: 1px solid #161616; }
+  .mdlx-status-bar .mdlx-status-bar__tank-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-align-content: space-between;
+        -ms-flex-line-pack: justify;
+            align-content: space-between;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+            align-items: flex-start; }
+    .mdlx-status-bar .mdlx-status-bar__tank-container .mdlx-status-bar__tank {
+      margin: 0 8px 0 8px; }
+
+.mdlx-status-message {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-align-content: space-between;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch; }
+  .mdlx-status-message__headline {
+    text-align: center;
+    text-transform: uppercase; }
+  .mdlx-status-message__subheadline {
+    text-align: center; }
