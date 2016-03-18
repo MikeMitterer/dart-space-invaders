@@ -5,7 +5,7 @@ See it Live: [spaceinvaders.mikemitterer.at](http://spaceinvaders.mikemitterer.a
 
 ![Screenshot-SpaceInvaders](https://github.com/MikeMitterer/dart-space-invaders/blob/master/images/spaceinvaders.png?raw=true)
 
-###License###
+### License
 
     Copyright 2016 Michael Mitterer (office@mikemitterer.at),
     IT-Consulting and Development Limited, Austrian Branch
