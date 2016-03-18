@@ -8,20 +8,20 @@ environment:
   sdk: '>=1.0.0 <2.0.0'
 
 dependencies:
-  browser: any
+  browser: ^0.10.0
 
   mdl: '>=1.0.0 <2.0.0'
     #path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
 
-  logging: any
-  logging_handlers: any
-  console_log_handler: any
+  logging: ^0.11.0
+  logging_handlers: ^0.8.0
+  console_log_handler: ^0.1.0
 
-  di: any
+  di: ^3.3.0
 
 dev_dependencies:
-  test: ^0.12.0
-  grinder: ^0.8.0
+  test: any
+  grinder: any
 
 transformers:
   - di
