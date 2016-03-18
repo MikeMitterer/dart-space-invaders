@@ -1,11 +1,11 @@
 name: spaceinvaders
 version: 1.0.1
 description: Space-Invaders built with Material Design Lite 4 Dart
-author: <Mike Mitterer> <office@mikemitterer.at>
+author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-space-invaders
 
 environment:
-  sdk: '>=1.0.0 <2.0.0'
+  sdk: ">=1.8.0 <2.0.0"
 
 dependencies:
   browser: ^0.10.0
