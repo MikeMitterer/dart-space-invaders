@@ -3,7 +3,7 @@
 
 See it Live: [spaceinvaders.mikemitterer.at](http://spaceinvaders.mikemitterer.at)
 
-[[https://github.com/MikeMitterer/dart-space-invaders/blob/master/imgages/spaceinvaders.png|alt=SpaceInvaders]]
+![Screenshot-SpaceInvaders](https://github.com/MikeMitterer/dart-space-invaders/blob/master/images/spaceinvaders.png?raw=true)
 
 ###License###
 
