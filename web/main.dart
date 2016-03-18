@@ -55,13 +55,15 @@ class Application extends MaterialApplication {
     final Logger _logger = new Logger('spaceinvaders.Application');
 
     final SpaceInvadersStore _store;
+    final ActionBus _actionbus;
 
     final FrameHandler _frameHandler = new FrameHandler();
     final SpriteFactory _spritefactory = new SpriteFactory();
     final Screen _screen = new Screen();
 
-    Application(this._store) {
+    Application(this._store,this._actionbus) {
         Validate.notNull(_store);
+        Validate.notNull(_actionbus);
     }
 
     void run() {
@@ -75,6 +77,7 @@ class Application extends MaterialApplication {
         _bindActions();
 
         init(_frameHandler,screensize,_spritefactory);
+        int prevTankHits = 0;
 
         void _gameLoop() {
 
@@ -85,7 +88,14 @@ class Application extends MaterialApplication {
 
             final GameState state = checkGameState(_spritefactory);
             if(state != _store.gamestate) {
+                if(state != GameState.Continue) {
+                    prevTankHits = 0;
+                }
                 _store.fire(new GameStateAction(state));
+            }
+            if(prevTankHits != _spritefactory.tank.hits) {
+                prevTankHits = _spritefactory.tank.hits;
+                _store.fire(new TankHitAction(_spritefactory.tank.hits));
             }
 
             // AnimationFrame becomes our main-loop
@@ -94,9 +104,9 @@ class Application extends MaterialApplication {
 
         _gameLoop();
 
-        bounceIn(dom.querySelector(".title")).then((_) {
+        bounceIn(dom.querySelector(".title"),persist: true).then((_) {
             new Future.delayed(new Duration(milliseconds: 1200),() {
-                flushRight(dom.querySelector(".title")).then((_) {
+                flushRight(dom.querySelector(".title"),persist: true).then((_) {
                     dom.querySelector(".game-container").classes.add("ready");
                     _logger.info("Animation completed!");
                 });
@@ -107,7 +117,7 @@ class Application extends MaterialApplication {
     // - private -------------------------------------------------------------------------------------------------------
 
     void _bindActions() {
-        _store.onChange.listen( (_) {
+        _actionbus.on(StartGameAction.NAME).listen( (_) {
             if(_store.hasStarted == true) {
                 init(_frameHandler,_screen.size,_spritefactory);
             }

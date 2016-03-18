@@ -32,4 +32,5 @@ abstract class SpaceInvadersStore extends DataStore {
 
     GameState get gamestate;
 
+    int get tanksLost;
 }

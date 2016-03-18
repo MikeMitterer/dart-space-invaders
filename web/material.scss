@@ -20,7 +20,6 @@
 @import "packages/mdl/assets/themes/deep_purple-pink/material-design-lite";
 @import "packages/spaceinvaders/assets/styles/main.scss";
 
-
 #spaceinvaders {
     background-color: #2657CA !important;
 
@@ -99,7 +98,6 @@
             padding: 40px 28px;
         }
 
-
         section.game-container {
             opacity: 0;
             &.ready { opacity: 1; }
@@ -136,6 +134,8 @@
                 justify-content: flex-start; // ↓
                 align-content: space-between; // =
                 align-items: center; // ⇾
+
+                max-width: 260px;
             }
         }
 
@@ -144,8 +144,14 @@
             height: 24px;
             padding: 0px 24px 12px 8px;
 
-            .mdl-mini-footer--link-list a {
-                font-size: 13px;
+            .mdl-mini-footer--link-list {
+                li {
+                    white-space: nowrap;
+
+                    a {
+                        font-size: 13px;
+                    }
+                }
             }
 
             background-color: rgba(0, 15, 74, 0.89) !important;

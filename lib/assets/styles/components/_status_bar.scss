@@ -1,0 +1,31 @@
+// ----------------------------------------------------------------------------
+// ---- Status Bar (below Game)
+// -
+
+.mdlx-status-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start; // ⇾
+    align-content: space-between; // ||
+    align-items: center; // ↓
+
+    background-color: darkgreen;
+    min-height: 28px;
+    max-height: 28px;
+
+    border-top: 1px solid #161616;
+
+    .mdlx-status-bar__tank-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start; // ⇾
+        align-content: space-between; // ||
+        align-items: flex-start; // ↓
+
+        .mdlx-status-bar__tank {
+            margin: 0 8px 0 8px;
+        }
+    }
+}

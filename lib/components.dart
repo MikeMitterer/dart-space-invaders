@@ -28,10 +28,17 @@ import 'package:di/di.dart' as di;
 
 import 'package:spaceinvaders/components/interface/stores.dart';
 import 'package:spaceinvaders/components/interface/actions.dart';
+import 'package:spaceinvaders/gamestate.dart';
 
 part 'components/ArcadeButtonComponent.dart';
+part 'components/ButtonLabelComponent.dart';
+part 'components/StatusBarComponent.dart';
+part 'components/StatusMessageComponent.dart';
 
 void registerSpaceInvaderComponents() {
 
     registerArcadeButtonComponent();
+    registerButtonLabelComponent();
+    registerStatusBarComponent();
+    registerStatusMessageComponent();
 }

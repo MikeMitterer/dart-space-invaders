@@ -37,3 +37,8 @@ class GameStateAction extends DataAction<GameState> {
     GameStateAction(final GameState state) : super(NAME,state) { Validate.notNull(state); }
 }
 
+/// We lost a tank
+class TankHitAction extends DataAction<int> {
+    static const ActionName NAME = const ActionName("spaceinvaders.components.actions.TankHitAction");
+    TankHitAction(final int hits) : super(NAME,hits);
+}

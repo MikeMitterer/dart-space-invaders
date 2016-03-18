@@ -25,6 +25,7 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
 
     bool _hasStarted = false;
     GameState _gamestate = GameState.Idle;
+    int _tanksLost = 0;
 
     SpaceInvadersStoreImpl(final ActionBus actionbus)
         : super(actionbus)  {
@@ -38,6 +39,8 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
 
     /// Game-Status
     GameState get gamestate => _gamestate;
+
+    int get tanksLost => _tanksLost;
 
     //- private -----------------------------------------------------------------------------------
 
@@ -67,6 +70,13 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
                 default:
                     break;
             }
+            emitChange();
+        });
+
+        on(TankHitAction.NAME).listen((final TankHitAction action) {
+            _tanksLost = action.data;
+
+            _logger.info("Tanks lost: ${_tanksLost}");
             emitChange();
         });
     }

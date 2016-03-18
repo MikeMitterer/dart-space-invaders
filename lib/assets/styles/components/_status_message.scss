@@ -1,0 +1,18 @@
+.mdlx-status-message {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start; // ↓
+    align-content: space-between; // =
+    align-items: stretch; // ⇾
+
+    &__headline {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    &__subheadline {
+        text-align: center;
+    }
+
+}
