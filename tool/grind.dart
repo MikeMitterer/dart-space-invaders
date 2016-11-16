@@ -37,13 +37,13 @@ analyze() {
 
 @Task()
 genCss() {
-    final String src = "lib/assets/styles/spaceinvaders.scss";
-    final String target = "${path.withoutExtension(src)}.css";
-    final String mini = "${path.withoutExtension(src)}.min.css";
+    // final String src = "lib/assets/styles/spaceinvaders.scss";
+    // final String target = "${path.withoutExtension(src)}.css";
+    // final String mini = "${path.withoutExtension(src)}.min.css";
 
-//    run("sassc", arguments: [ src, target ] );
-//    run("autoprefixer", arguments: [ target ] );
-//    run("minify", arguments: [ "--output", mini, target ]);
+    // run("sassc", arguments: [ src, target ] );
+    // run("autoprefixer", arguments: [ target ] );
+    // run("minify", arguments: [ "--output", mini, target ]);
 
     run("/Users/mikemitterer/.pub-cache/bin/sitegen", arguments: [ "-c" ]);
 }

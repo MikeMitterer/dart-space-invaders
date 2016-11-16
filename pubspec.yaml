@@ -22,6 +22,7 @@ dependencies:
 dev_dependencies:
   test: any
   grinder: any
+  sitegen: any
 
 transformers:
   - di
