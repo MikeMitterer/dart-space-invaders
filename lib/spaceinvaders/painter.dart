@@ -24,7 +24,7 @@ part of spaceinvaders;
 ///     final Painter painter = screen.painter;
 ///     spritefactory.tank.draw(painter);
 class Painter {
-    final Logger _logger = new Logger('spaceinvaders.Painter');
+    static final Logger _logger = new Logger('spaceinvaders.Painter');
 
     final  dom.CanvasRenderingContext2D _context;
     Painter(this._context);
@@ -83,7 +83,7 @@ class Painter {
 ///
 ///     }
 class ImagePainter extends Painter {
-    final Logger _logger = new Logger('spaceinvaders.CityPainter');
+    static final Logger _logger = new Logger('spaceinvaders.CityPainter');
 
     final dom.CanvasElement _canvas;
 

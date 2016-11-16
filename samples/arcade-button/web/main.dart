@@ -6,7 +6,6 @@ import 'package:di/di.dart' as di;
 
 import 'package:mdl/mdl.dart';
 
-import 'package:spaceinvaders/components/interface/actions.dart';
 import 'package:spaceinvaders/components/interface/stores.dart';
 
 import 'package:spaceinvaders/components.dart';

@@ -2,7 +2,7 @@ import 'package:grinder/grinder.dart';
 
 import 'package:path/path.dart' as path;
 
-main(args) => grind(args);
+main(final List<String> args) => grind(args);
 
 @Task()
 @Depends(genCss, test)

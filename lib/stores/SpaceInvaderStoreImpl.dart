@@ -52,7 +52,8 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
             emitChange();
         });
 
-        on(GameStateAction.NAME).listen(( final GameStateAction action) {
+        on(GameStateAction.NAME)
+            .map((final Action action) => action as GameStateAction).listen(( final GameStateAction action) {
             _gamestate = action.data;
             switch(_gamestate) {
                 case GameState.YouWon:
@@ -73,7 +74,8 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
             emitChange();
         });
 
-        on(TankHitAction.NAME).listen((final TankHitAction action) {
+        on(TankHitAction.NAME)
+            .map((final Action action) => action as TankHitAction).listen((final TankHitAction action) {
             _tanksLost = action.data;
 
             _logger.info("Tanks lost: ${_tanksLost}");
