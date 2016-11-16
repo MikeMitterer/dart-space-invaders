@@ -1,6 +1,11 @@
 # Change Log for spaceinvaders
 Space-Invaders built with Material Design Lite 4 Dart
 
+## [v1.0.2](http://github.com/mikemitterer/dart-space-invaders/compare/v1.0.1...v1.0.2) - 2016-11-16
+
+### Docs
+* Strong-Mode support [9d0430e](https://github.com/mikemitterer/dart-space-invaders/commit/9d0430eef333e24003abfd8274a0ffe2446b4d24)
+
 ## [v1.0.0](http://github.com/mikemitterer/dart-space-invaders/compare/v0.1.0...v1.0.0) - 2016-03-18
 
 ### Feature
