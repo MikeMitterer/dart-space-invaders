@@ -1,6 +1,11 @@
 # Change Log for spaceinvaders
 Space-Invaders built with Material Design Lite 4 Dart
 
+## [v1.1.0](http://github.com/mikemitterer/dart-space-invaders/compare/v1.0.2...v1.1.0) - 2016-11-16
+
+### Feature
+* SCSS-Styles now with sitegen-support, no need for packages-folder anymore [2b23255](https://github.com/mikemitterer/dart-space-invaders/commit/2b2325512c7a8d5877a6304feb2c27a46b372faf)
+
 ## [v1.0.2](http://github.com/mikemitterer/dart-space-invaders/compare/v1.0.1...v1.0.2) - 2016-11-16
 
 ### Docs
