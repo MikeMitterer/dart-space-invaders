@@ -21,11 +21,14 @@
 library spaceinvaders.components.stores;
 
 import 'package:mdl/mdlflux.dart';
+import 'package:dice/dice.dart' as di;
 import 'package:spaceinvaders/gamestate.dart';
 
 /// Data-Model for this application. Only one store is necessary.
 ///
 /// Interface has just getters!
+///
+@di.injectable
 abstract class SpaceInvadersStore extends DataStore {
 
     bool get hasStarted;

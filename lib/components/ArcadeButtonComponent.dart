@@ -28,7 +28,9 @@ part of spaceinvaders.components;
 ///         }     
 ///     }
 class ArcadeButtonComponentModule  extends di.Module {
-    ArcadeButtonComponentModule() {
+
+    @override
+    configure() {
         // bind(DeviceProxy);
         
         // -- services
@@ -38,6 +40,8 @@ class ArcadeButtonComponentModule  extends di.Module {
 
 /// Controller for <div class="mdlx-arcade-button"></div>
 ///
+
+@Component
 class ArcadeButtonComponent extends MdlComponent {
     final Logger _logger = new Logger('spaceinvaders.components.ArcadeButtonComponent');
 
@@ -92,7 +96,8 @@ class ArcadeButtonComponent extends MdlComponent {
 void registerArcadeButtonComponent() {
     final MdlConfig config = new MdlWidgetConfig<ArcadeButtonComponent>(
         _ArcadeButtonComponentConstant.WIDGET_SELECTOR,
-            (final dom.HtmlElement element,final di.Injector injector) => new ArcadeButtonComponent.fromElement(element,injector)
+            (final dom.HtmlElement element,final di.Injector injector)
+                => new ArcadeButtonComponent.fromElement(element,injector)
     );
     
     // If you want <mdlx-arcade-button></mdlx-arcade-button> set selectorType to SelectorType.TAG.

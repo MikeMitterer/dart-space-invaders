@@ -24,7 +24,7 @@ import 'dart:html' as dom;
 import 'package:mdl/mdl.dart';
 
 import 'package:logging/logging.dart';
-import 'package:di/di.dart' as di;
+import 'package:dice/dice.dart' as di;
 
 import 'package:spaceinvaders/components/interface/stores.dart';
 import 'package:spaceinvaders/components/interface/actions.dart';
@@ -41,4 +41,5 @@ void registerSpaceInvaderComponents() {
     registerButtonLabelComponent();
     registerStatusBarComponent();
     registerStatusMessageComponent();
+
 }

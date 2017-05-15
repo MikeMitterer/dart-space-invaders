@@ -40,7 +40,7 @@ class ButtonLabelComponentModule  extends di.Module {
 
 /// Controller-View for <mdlx-button-label></mdlx-button-label>
 ///
-@MdlComponentModel
+@Component
 class ButtonLabelComponent extends MdlComponent {
     final Logger _logger = new Logger('spaceinvaders.components.ButtonLabelComponent');
 

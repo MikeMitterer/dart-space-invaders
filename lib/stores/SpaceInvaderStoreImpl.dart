@@ -19,7 +19,7 @@
      
 part of spaceinvaders.stores;
 
-@di.Injectable()
+@di.injectable
 class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
     final Logger _logger = new Logger('spaceinvaders.stores.SpaceInvaderStoreImpl');
 
@@ -27,6 +27,7 @@ class SpaceInvadersStoreImpl extends Dispatcher implements SpaceInvadersStore {
     GameState _gamestate = GameState.Idle;
     int _tanksLost = 0;
 
+    @di.inject
     SpaceInvadersStoreImpl(final ActionBus actionbus)
         : super(actionbus)  {
         Validate.notNull(actionbus);

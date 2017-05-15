@@ -22,7 +22,7 @@ library spaceinvaders.stores;
 
 import 'package:mdl/mdl.dart';
 
-import 'package:di/di.dart' as di;
+import 'package:dice/dice.dart' as di;
 import 'package:logging/logging.dart';
 import 'package:validate/validate.dart';
 

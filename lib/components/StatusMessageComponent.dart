@@ -40,7 +40,7 @@ class StatusMessageComponentModule  extends di.Module {
 
 /// Controller-View for <mdlx-status-message></mdlx-status-message>
 ///
-@MdlComponentModel
+@Component
 class StatusMessageComponent extends MdlComponent {
     final Logger _logger = new Logger('spaceinvaders.components.StatusMessageComponent');
 

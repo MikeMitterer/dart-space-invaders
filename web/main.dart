@@ -6,7 +6,7 @@ import 'dart:html' as dom;
 import 'dart:math' as math;
 
 import 'package:console_log_handler/console_log_handler.dart';
-import 'package:di/di.dart' as di;
+import 'package:dice/dice.dart' as di;
 import 'package:logging/logging.dart';
 import 'package:validate/validate.dart';
 
@@ -50,7 +50,7 @@ GameState checkGameState(final SpriteFactory spritefactory) {
     return GameState.Continue;
 }
 
-@MdlComponentModel @di.Injectable()
+@di.injectable
 class Application extends MaterialApplication {
     final Logger _logger = new Logger('spaceinvaders.Application');
 
@@ -61,6 +61,7 @@ class Application extends MaterialApplication {
     final SpriteFactory _spritefactory = new SpriteFactory();
     final Screen _screen = new Screen();
 
+    @di.inject
     Application(this._store,this._actionbus) {
         Validate.notNull(_store);
         Validate.notNull(_actionbus);
@@ -142,13 +143,14 @@ main() async {
  * SI Module
  */
 class SpaceInvadersModule extends di.Module {
-    SpaceInvadersModule() {
+    @override
+    configure() {
         // install(new XXXModule());
 
         // -- services
 
         // -- stores
-        bind(SpaceInvadersStore, toImplementation: SpaceInvadersStoreImpl);
+        bind(SpaceInvadersStore).to(SpaceInvadersStoreImpl).asSingleton();
     }
 }
 

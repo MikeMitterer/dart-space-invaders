@@ -1,7 +1,5 @@
 import 'package:grinder/grinder.dart';
 
-import 'package:path/path.dart' as path;
-
 main(final List<String> args) => grind(args);
 
 @Task()

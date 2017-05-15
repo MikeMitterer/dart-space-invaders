@@ -40,7 +40,7 @@ class StatusBarComponentModule  extends di.Module {
 
 /// Controller-View for <mdlx-status-bar></mdlx-status-bar>
 ///
-@MdlComponentModel
+@Component
 class StatusBarComponent extends MdlComponent {
     final Logger _logger = new Logger('spaceinvaders.components.StatusBarComponent');
 
