@@ -2,6 +2,11 @@ import 'package:grinder/grinder.dart';
 
 main(final List<String> args) => grind(args);
 
+@DefaultTask('Shows this help-info')
+showHelp() {
+    run("grind", arguments: [ "--help"]);
+}
+
 @Task()
 @Depends(genCss, test)
 build() {

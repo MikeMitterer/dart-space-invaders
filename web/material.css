@@ -4116,12 +4116,21 @@ input.mdl-button[type="submit"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: row wrap;
-      flex-flow: row wrap;
-  margin: 0 auto 0 auto;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch; }
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-line-pack: justify;
+      align-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin: 0 auto 0 auto; }
   .mdl-grid.mdl-grid--no-spacing {
     padding: 0; }
 
@@ -4935,8 +4944,7 @@ input.mdl-button[type="submit"] {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none;
-  width: 100%; }
+          user-select: none; }
   .mdl-menu__container.is-visible .mdl-menu__item {
     opacity: 1; }
   .mdl-menu__item::-moz-focus-inner {
@@ -5093,6 +5101,7 @@ input.mdl-button[type="submit"] {
   display: block;
   position: relative;
   height: 4px;
+  width: 500px;
   max-width: 100%; }
 
 .mdl-progress > .bar {
@@ -5128,15 +5137,7 @@ input.mdl-button[type="submit"] {
 .mdl-progress:not(.mdl-progress--indeterminate) > .auxbar,
 .mdl-progress:not(.mdl-progress__indeterminate) > .auxbar {
   background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.26)), -webkit-linear-gradient(left, #673ab7, #673ab7);
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.26)), linear-gradient(to right, #673ab7, #673ab7);
-  -webkit-animation-name: fadeinout;
-          animation-name: fadeinout;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear; }
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.26)), linear-gradient(to right, #673ab7, #673ab7); }
 
 .mdl-progress.mdl-progress--indeterminate > .bar1,
 .mdl-progress.mdl-progress__indeterminate > .bar1 {
@@ -5210,11 +5211,6 @@ input.mdl-button[type="submit"] {
   100% {
     left: 100%;
     width: 0; } }
-@keyframes fadeinout {
-  0%, 100% {
-    opacity: 0.3; }
-  50% {
-    opacity: 0.7; } }
 .mdl-navigation {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -6933,6 +6929,13 @@ template, div[template] {
 .mdl-textfield.is-disabled .mdl-textfield__input {
   color: rgba(0, 0, 0, 0.26); }
 
+.mdl-textfield__label.mdl-textfield__label--icon-right {
+  white-space: normal; }
+  .mdl-textfield__label.mdl-textfield__label--icon-right i {
+    float: right;
+    padding-right: 2px;
+    font-size: 21px; }
+
 /* TOOLTIP */
 .mdl-tooltip {
   -webkit-transform: scale(0);
@@ -7149,7 +7152,7 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
       right: -10px; }
 
 /* Dialog */
-.mdl-dialog-container {
+.mdl-dialog-container, .mdl-datepicker-container, .mdl-timepicker-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7171,21 +7174,16 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
   z-index: 80;
   visibility: hidden;
   background-color: transparent; }
-  .mdl-dialog-container.is-visible {
+  .mdl-dialog-container.is-visible, .mdl-datepicker-container.is-visible, .mdl-timepicker-container.is-visible {
     background-color: rgba(0, 0, 0, 0.25);
     visibility: visible; }
-    .mdl-dialog-container.is-visible .mdl-dialog {
-      opacity: 1;
-      -webkit-transition: 0.2s;
-      transition: 0.2s;
-      -webkit-transform: translate3d(0, 0, 0) scale(1);
-              transform: translate3d(0, 0, 0) scale(1); }
-  .mdl-dialog-container.is-hidden .mdl-dialog {
-    -webkit-transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -webkit-transform: translate3d(0, 100%, 0) scale(0.2);
-            transform: translate3d(0, 100%, 0) scale(0.2); }
-  .mdl-dialog-container .mdl-dialog {
+    .mdl-dialog-container.is-visible .mdl-dialog.animation.last-state, .mdl-datepicker-container.is-visible .mdl-dialog.animation.last-state, .mdl-timepicker-container.is-visible .mdl-dialog.animation.last-state {
+      opacity: 1; }
+  .mdl-dialog-container > .mdl-dialog, .mdl-datepicker-container > .mdl-dialog, .mdl-timepicker-container > .mdl-dialog {
+    pointer-events: none; }
+    .mdl-dialog-container > .mdl-dialog:last-of-type, .mdl-datepicker-container > .mdl-dialog:last-of-type, .mdl-timepicker-container > .mdl-dialog:last-of-type {
+      pointer-events: all; }
+  .mdl-dialog-container .mdl-dialog, .mdl-datepicker-container .mdl-dialog, .mdl-timepicker-container .mdl-dialog {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -7199,10 +7197,28 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
     min-width: 280px;
     max-width: 80%;
     max-height: 80%;
-    position: relative;
     overflow: hidden;
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); }
-    .mdl-dialog-container .mdl-dialog .mdl-dialog__content {
+    .mdl-dialog-container .mdl-dialog .mdl-dialog__toolbar, .mdl-datepicker-container .mdl-dialog .mdl-dialog__toolbar, .mdl-timepicker-container .mdl-dialog .mdl-dialog__toolbar {
+      padding: 18px 24px 18px 24px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+      -webkit-box-pack: start;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start; }
+    .mdl-dialog-container .mdl-dialog .mdl-dialog__content, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content {
       display: block;
       box-sizing: border-box;
       -webkit-box-ordinal-group: 2;
@@ -7213,11 +7229,11 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
       -webkit-overflow-scrolling: touch;
       -webkit-overflow-scrolling: touch;
       -ms-overflow-style: -ms-autohiding-scrollbar; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content:not([layout=row]) > *:first-child:not(.mdl-subheader) {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content:not([layout=row]) > *:first-child:not(.mdl-subheader), .mdl-datepicker-container .mdl-dialog .mdl-dialog__content:not([layout=row]) > *:first-child:not(.mdl-subheader), .mdl-timepicker-container .mdl-dialog .mdl-dialog__content:not([layout=row]) > *:first-child:not(.mdl-subheader) {
         margin-top: 0; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content h1, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h2, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h3, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h4, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h5, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h6 {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content h1, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h2, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h3, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h4, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h5, .mdl-dialog-container .mdl-dialog .mdl-dialog__content h6, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h1, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h2, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h3, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h4, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h5, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content h6, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h1, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h2, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h3, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h4, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h5, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content h6 {
         margin-bottom: 18px; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content p {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content p, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content p, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content p {
         font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-size: 16px;
         font-weight: 400;
@@ -7225,17 +7241,17 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
         letter-spacing: 0.04em;
         opacity: 0.87;
         color: black; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar {
-        display: none;
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar {
+        visibility: hidden;
         -webkit-appearance: none;
         width: 0;
         height: 0;
         background-color: transparent; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar * {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar *, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar *, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar * {
         background-color: transparent; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar-button {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar-button, .mdl-datepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar-button, .mdl-timepicker-container .mdl-dialog .mdl-dialog__content::-webkit-scrollbar-button {
         display: none; }
-    .mdl-dialog-container .mdl-dialog .mdl-dialog__actions {
+    .mdl-dialog-container .mdl-dialog .mdl-dialog__actions, .mdl-datepicker-container .mdl-dialog .mdl-dialog__actions, .mdl-timepicker-container .mdl-dialog .mdl-dialog__actions {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -7253,10 +7269,209 @@ input[name^='mdl-accordion']:checked ~ .mdl-accordion--content {
       margin-top: 16px;
       margin-bottom: 8px;
       min-height: 40px; }
-      .mdl-dialog-container .mdl-dialog .mdl-dialog__actions > * {
+      .mdl-dialog-container .mdl-dialog .mdl-dialog__actions > *, .mdl-datepicker-container .mdl-dialog .mdl-dialog__actions > *, .mdl-timepicker-container .mdl-dialog .mdl-dialog__actions > * {
         margin-left: 8px; }
-    .mdl-dialog-container .mdl-dialog.mdl-content-overflow .mdl-actions {
+    .mdl-dialog-container .mdl-dialog.mdl-content-overflow .mdl-actions, .mdl-datepicker-container .mdl-dialog.mdl-content-overflow .mdl-actions, .mdl-timepicker-container .mdl-dialog.mdl-content-overflow .mdl-actions {
       border-top: 1px solid; }
+
+.mdl-datepicker {
+  display: block;
+  width: 330px; }
+  .mdl-datepicker .mdl-datepicker__year, .mdl-datepicker .mdl-datepicker__date {
+    opacity: 0.8;
+    cursor: pointer; }
+    .mdl-datepicker .mdl-datepicker__year.is-active, .mdl-datepicker .mdl-datepicker__date.is-active {
+      opacity: 1;
+      cursor: default; }
+  .mdl-datepicker .mdl-datepicker__day_view {
+    height: 320px; }
+    .mdl-datepicker.show-year-view .mdl-datepicker__day_view {
+      display: none; }
+    .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__month_selection {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+      -webkit-box-pack: start;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      margin-bottom: 8px; }
+      .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__month_selection i {
+        cursor: pointer; }
+      .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__month_selection .mdl-datepicker__month_selection--month {
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        text-align: center; }
+    .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dow {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+      -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
+      -ms-flex-line-pack: distribute;
+          align-content: space-around;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      height: 40px;
+      font-size: 12px;
+      opacity: 0.6; }
+      .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dow > * {
+        text-align: center;
+        width: calc(100% / 7); }
+    .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dom {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+      -webkit-box-pack: start;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+      -webkit-box-align: stretch;
+          -ms-flex-align: stretch;
+              align-items: stretch; }
+      .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dom .mdl-datepicker__dom__row {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -ms-flex-line-pack: distribute;
+            align-content: space-around;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        width: 100%;
+        height: 40px; }
+        .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dom .mdl-datepicker__dom__row > .mdl-datepicker__dom--day {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
+          -ms-flex-line-pack: distribute;
+              align-content: space-around;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          text-align: center;
+          width: calc(100% / 7);
+          font-size: 12px;
+          line-height: 40px;
+          cursor: pointer; }
+          .mdl-datepicker .mdl-datepicker__day_view .mdl-datepicker__dom .mdl-datepicker__dom__row > .mdl-datepicker__dom--day.mdl-color--accent {
+            border-radius: 100%;
+            vertical-align: middle; }
+  .mdl-datepicker .mdl-datepicker__year_view {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    display: none;
+    height: 320px;
+    overflow: scroll; }
+    .mdl-datepicker .mdl-datepicker__year_view::-webkit-scrollbar {
+      visibility: hidden;
+      -webkit-appearance: none;
+      width: 0;
+      height: 0;
+      background-color: transparent; }
+    .mdl-datepicker .mdl-datepicker__year_view::-webkit-scrollbar * {
+      background-color: transparent; }
+    .mdl-datepicker .mdl-datepicker__year_view::-webkit-scrollbar-button {
+      display: none; }
+    .mdl-datepicker.show-year-view .mdl-datepicker__year_view {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+      -webkit-box-pack: start;
+          -ms-flex-pack: start;
+              justify-content: flex-start;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .mdl-datepicker .mdl-datepicker__year_view ul {
+      width: 100%; }
+      .mdl-datepicker .mdl-datepicker__year_view ul li {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -ms-flex-line-pack: justify;
+            align-content: space-between;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        cursor: pointer; }
+        .mdl-datepicker .mdl-datepicker__year_view ul li.mdl-color-text--accent {
+          font-size: 26px; }
+
+.mdl-dialog.mdl-datepicker {
+  left: calc(50% - (330px) / 2); }
+  .mdl-dialog-container .mdl-dialog.mdl-datepicker {
+    max-height: 90%; }
+  .mdl-dialog.mdl-datepicker .mdl-dialog__toolbar {
+    min-height: 60px; }
+  .mdl-dialog.mdl-datepicker .mdl-dialog__content {
+    padding: 18px 18px 0 18px; }
+  .mdl-dialog.mdl-datepicker .mdl-dialog__actions {
+    padding-top: 0;
+    padding-right: 0;
+    margin-right: -8px;
+    margin-bottom: 2px; }
 
 .mdl-dnd__drag-container {
   position: relative; }
@@ -7471,6 +7686,10 @@ mdl-draggable {
       .mdl-form .mdl-form__content .mdl-form__group .mdl-icon, .mdl-form-registration .mdl-form__content .mdl-form__group .mdl-icon {
         font-size: 24px;
         min-width: 32px; }
+      .mdl-form .mdl-form__content .mdl-form__group .mdl-button--icon, .mdl-form-registration .mdl-form__content .mdl-form__group .mdl-button--icon {
+        min-width: 32px; }
+        .mdl-form .mdl-form__content .mdl-form__group .mdl-button--icon .material-icons, .mdl-form-registration .mdl-form__content .mdl-form__group .mdl-button--icon .material-icons {
+          left: 12px; }
   .mdl-form .mdl-form__actions, .mdl-form-registration .mdl-form__actions {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -7491,6 +7710,10 @@ mdl-draggable {
             align-items: flex-start;
     margin: 8px 8px 0 8px;
     width: calc(100% - 16px); }
+    .mdl-form .mdl-form__actions .mdl-form__actions__spacer, .mdl-form-registration .mdl-form__actions .mdl-form__actions__spacer {
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1; }
     .mdl-form .mdl-form__actions > *, .mdl-form-registration .mdl-form__actions > * {
       margin-left: 4px; }
   .mdl-form .mdl-textfield.is-invalid .mdl-textfield__error, .mdl-form-registration .mdl-textfield.is-invalid .mdl-textfield__error {
@@ -7867,14 +8090,8 @@ mdl-draggable {
   .mdl-notification-container.is-visible {
     background-color: transparent;
     visibility: visible; }
-    .mdl-notification-container.is-visible .mdl-notification {
-      opacity: 1;
-      -webkit-transition: all 1s cubic-bezier(0.55, 0, 0.55, 0.2);
-      transition: all 1s cubic-bezier(0.55, 0, 0.55, 0.2); }
-  .mdl-notification-container.is-hidden .mdl-notification {
-    opacity: 0;
-    -webkit-transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .mdl-notification-container.is-visible .mdl-notification.animation.last-state {
+      opacity: 1; }
   .mdl-notification-container .mdl-notification {
     position: relative;
     box-sizing: border-box;
@@ -7898,6 +8115,7 @@ mdl-draggable {
             align-items: flex-start;
     -ms-flex-negative: 0;
         flex-shrink: 0;
+    opacity: 0;
     min-height: 48px;
     min-width: 324px;
     max-width: 324px;
@@ -7911,6 +8129,8 @@ mdl-draggable {
     font-size: 14px;
     cursor: default;
     margin-bottom: 12px; }
+    .mdl-notification-container .mdl-notification.animation.closed-state {
+      opacity: 0; }
     .mdl-notification-container .mdl-notification h1, .mdl-notification-container .mdl-notification h2, .mdl-notification-container .mdl-notification h3, .mdl-notification-container .mdl-notification h4, .mdl-notification-container .mdl-notification h5, .mdl-notification-container .mdl-notification h6 {
       margin-top: 0;
       margin-bottom: 0; }
@@ -8373,6 +8593,456 @@ mdl-draggable {
     .mdl-snackbar.ng-leave.ng-leave-active.mdl-snackbar--top.mdl-swiperight {
       -webkit-transform: translate3d(100%, 0, 0) rotateZ(15deg);
               transform: translate3d(100%, 0, 0) rotateZ(15deg); } }
+.mdl-timepicker .mdl-timepicker__time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-line-pack: justify;
+      align-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+  .mdl-timepicker .mdl-timepicker__time .mdl-timepicker__time--hour, .mdl-timepicker .mdl-timepicker__time .mdl-timepicker__time--minute {
+    opacity: 0.8;
+    cursor: pointer; }
+    .mdl-timepicker .mdl-timepicker__time .mdl-timepicker__time--hour.is-active, .mdl-timepicker .mdl-timepicker__time .mdl-timepicker__time--minute.is-active {
+      opacity: 1; }
+.mdl-timepicker .mdl-timepicker__hours {
+  width: 292px;
+  height: 292px;
+  border-radius: 100%;
+  position: relative; }
+  .mdl-timepicker.show-minute-view .mdl-timepicker__hours {
+    display: none; }
+  .mdl-timepicker .mdl-timepicker__hours__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-top: -2px;
+    margin-left: -2px;
+    border-radius: 100%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__hours__center:before {
+      content: " ";
+      width: 2px;
+      height: 125px;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      z-index: 1;
+      display: block;
+      margin-left: -1px;
+      position: absolute;
+      border-left: 2px solid;
+      -webkit-transform: translate(0px, 6px);
+              transform: translate(0px, 6px); }
+  .mdl-timepicker .mdl-timepicker__hours--1 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-150deg);
+            transform: rotate(-150deg); }
+  .mdl-timepicker .mdl-timepicker__hours--13 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-150deg);
+            transform: rotate(-150deg); }
+    .mdl-timepicker .mdl-timepicker__hours--13 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--2 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-120deg);
+            transform: rotate(-120deg); }
+  .mdl-timepicker .mdl-timepicker__hours--14 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-120deg);
+            transform: rotate(-120deg); }
+    .mdl-timepicker .mdl-timepicker__hours--14 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--3 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg); }
+  .mdl-timepicker .mdl-timepicker__hours--15 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg); }
+    .mdl-timepicker .mdl-timepicker__hours--15 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--4 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg); }
+  .mdl-timepicker .mdl-timepicker__hours--16 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__hours--16 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--5 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg); }
+  .mdl-timepicker .mdl-timepicker__hours--17 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg); }
+    .mdl-timepicker .mdl-timepicker__hours--17 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--6 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  .mdl-timepicker .mdl-timepicker__hours--18 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__hours--18 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--7 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(30deg);
+            transform: rotate(30deg); }
+  .mdl-timepicker .mdl-timepicker__hours--19 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(30deg);
+            transform: rotate(30deg); }
+    .mdl-timepicker .mdl-timepicker__hours--19 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--8 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(60deg);
+            transform: rotate(60deg); }
+  .mdl-timepicker .mdl-timepicker__hours--20 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(60deg);
+            transform: rotate(60deg); }
+    .mdl-timepicker .mdl-timepicker__hours--20 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--9 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  .mdl-timepicker .mdl-timepicker__hours--21 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+    .mdl-timepicker .mdl-timepicker__hours--21 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--10 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(120deg);
+            transform: rotate(120deg); }
+  .mdl-timepicker .mdl-timepicker__hours--22 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(120deg);
+            transform: rotate(120deg); }
+    .mdl-timepicker .mdl-timepicker__hours--22 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--11 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(150deg);
+            transform: rotate(150deg); }
+  .mdl-timepicker .mdl-timepicker__hours--23 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(150deg);
+            transform: rotate(150deg); }
+    .mdl-timepicker .mdl-timepicker__hours--23 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours--12 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  .mdl-timepicker .mdl-timepicker__hours--24 .mdl-timepicker__hours__center {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+    .mdl-timepicker .mdl-timepicker__hours--24 .mdl-timepicker__hours__center:before {
+      height: 80px; }
+  .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 {
+    top: 21px;
+    left: 21px;
+    position: relative;
+    /* 1 */
+    width: 250px;
+    height: 250px;
+    padding: 0;
+    border-radius: 50%;
+    list-style: none;
+    /* 2 */
+    box-sizing: content-box;
+    /* 3 */
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > * {
+      /* 4 */
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      margin: -18px;
+      text-align: center;
+      vertical-align: center; }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(1) {
+      -webkit-transform: rotate(0deg) translate(125px) rotate(60deg);
+              transform: rotate(0deg) translate(125px) rotate(60deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(2) {
+      -webkit-transform: rotate(30deg) translate(125px) rotate(30deg);
+              transform: rotate(30deg) translate(125px) rotate(30deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(3) {
+      -webkit-transform: rotate(60deg) translate(125px) rotate(0deg);
+              transform: rotate(60deg) translate(125px) rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(4) {
+      -webkit-transform: rotate(90deg) translate(125px) rotate(-30deg);
+              transform: rotate(90deg) translate(125px) rotate(-30deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(5) {
+      -webkit-transform: rotate(120deg) translate(125px) rotate(-60deg);
+              transform: rotate(120deg) translate(125px) rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(6) {
+      -webkit-transform: rotate(150deg) translate(125px) rotate(-90deg);
+              transform: rotate(150deg) translate(125px) rotate(-90deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(7) {
+      -webkit-transform: rotate(180deg) translate(125px) rotate(-120deg);
+              transform: rotate(180deg) translate(125px) rotate(-120deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(8) {
+      -webkit-transform: rotate(210deg) translate(125px) rotate(-150deg);
+              transform: rotate(210deg) translate(125px) rotate(-150deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(9) {
+      -webkit-transform: rotate(240deg) translate(125px) rotate(-180deg);
+              transform: rotate(240deg) translate(125px) rotate(-180deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(10) {
+      -webkit-transform: rotate(270deg) translate(125px) rotate(-210deg);
+              transform: rotate(270deg) translate(125px) rotate(-210deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(11) {
+      -webkit-transform: rotate(300deg) translate(125px) rotate(-240deg);
+              transform: rotate(300deg) translate(125px) rotate(-240deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 > :nth-of-type(12) {
+      -webkit-transform: rotate(330deg) translate(125px) rotate(-270deg);
+              transform: rotate(330deg) translate(125px) rotate(-270deg); }
+    .debug .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--1-12 {
+      border: solid 1px tomato; }
+  .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 {
+    top: 51px;
+    left: 66px;
+    position: relative;
+    /* 1 */
+    width: 160px;
+    height: 160px;
+    padding: 0;
+    border-radius: 50%;
+    list-style: none;
+    /* 2 */
+    box-sizing: content-box;
+    /* 3 */
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg);
+    position: absolute; }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > * {
+      /* 4 */
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      margin: -18px;
+      text-align: center;
+      vertical-align: center; }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(1) {
+      -webkit-transform: rotate(0deg) translate(80px) rotate(60deg);
+              transform: rotate(0deg) translate(80px) rotate(60deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(2) {
+      -webkit-transform: rotate(30deg) translate(80px) rotate(30deg);
+              transform: rotate(30deg) translate(80px) rotate(30deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(3) {
+      -webkit-transform: rotate(60deg) translate(80px) rotate(0deg);
+              transform: rotate(60deg) translate(80px) rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(4) {
+      -webkit-transform: rotate(90deg) translate(80px) rotate(-30deg);
+              transform: rotate(90deg) translate(80px) rotate(-30deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(5) {
+      -webkit-transform: rotate(120deg) translate(80px) rotate(-60deg);
+              transform: rotate(120deg) translate(80px) rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(6) {
+      -webkit-transform: rotate(150deg) translate(80px) rotate(-90deg);
+              transform: rotate(150deg) translate(80px) rotate(-90deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(7) {
+      -webkit-transform: rotate(180deg) translate(80px) rotate(-120deg);
+              transform: rotate(180deg) translate(80px) rotate(-120deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(8) {
+      -webkit-transform: rotate(210deg) translate(80px) rotate(-150deg);
+              transform: rotate(210deg) translate(80px) rotate(-150deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(9) {
+      -webkit-transform: rotate(240deg) translate(80px) rotate(-180deg);
+              transform: rotate(240deg) translate(80px) rotate(-180deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(10) {
+      -webkit-transform: rotate(270deg) translate(80px) rotate(-210deg);
+              transform: rotate(270deg) translate(80px) rotate(-210deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(11) {
+      -webkit-transform: rotate(300deg) translate(80px) rotate(-240deg);
+              transform: rotate(300deg) translate(80px) rotate(-240deg); }
+    .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 > :nth-of-type(12) {
+      -webkit-transform: rotate(330deg) translate(80px) rotate(-270deg);
+              transform: rotate(330deg) translate(80px) rotate(-270deg); }
+    .debug .mdl-timepicker .mdl-timepicker__hours .mdl-timepicker__hours__circle--13-24 {
+      border: solid 1px blue; }
+  .mdl-timepicker .mdl-timepicker__hours li {
+    border-radius: 100%;
+    cursor: pointer; }
+    .debug .mdl-timepicker .mdl-timepicker__hours li {
+      border: 1px solid blueviolet; }
+.mdl-timepicker .mdl-timepicker__minutes {
+  display: none;
+  width: 292px;
+  height: 292px;
+  border-radius: 100%;
+  position: relative; }
+  .mdl-timepicker.show-minute-view .mdl-timepicker__minutes {
+    display: block; }
+  .mdl-timepicker .mdl-timepicker__minutes__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-top: -2px;
+    margin-left: -2px;
+    border-radius: 100%;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__center:before {
+      content: " ";
+      width: 2px;
+      height: 125px;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      z-index: 1;
+      display: block;
+      margin-left: -1px;
+      position: absolute;
+      border-left: 2px solid;
+      -webkit-transform: translate(0px, 6px);
+              transform: translate(0px, 6px); }
+  .mdl-timepicker .mdl-timepicker__minutes--0 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(-150deg);
+            transform: rotate(-150deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--5 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(-120deg);
+            transform: rotate(-120deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--10 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--15 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--20 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(-30deg);
+            transform: rotate(-30deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--25 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--30 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(30deg);
+            transform: rotate(30deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--35 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(60deg);
+            transform: rotate(60deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--40 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--45 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(120deg);
+            transform: rotate(120deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--50 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(150deg);
+            transform: rotate(150deg); }
+  .mdl-timepicker .mdl-timepicker__minutes--55 .mdl-timepicker__minutes__center {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  .mdl-timepicker .mdl-timepicker__minutes__circle {
+    top: 21px;
+    left: 21px;
+    position: relative;
+    /* 1 */
+    width: 250px;
+    height: 250px;
+    padding: 0;
+    border-radius: 50%;
+    list-style: none;
+    /* 2 */
+    box-sizing: content-box;
+    /* 3 */
+    -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > * {
+      /* 4 */
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      margin: -18px;
+      text-align: center;
+      vertical-align: center; }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(1) {
+      -webkit-transform: rotate(0deg) translate(125px) rotate(60deg);
+              transform: rotate(0deg) translate(125px) rotate(60deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(2) {
+      -webkit-transform: rotate(30deg) translate(125px) rotate(30deg);
+              transform: rotate(30deg) translate(125px) rotate(30deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(3) {
+      -webkit-transform: rotate(60deg) translate(125px) rotate(0deg);
+              transform: rotate(60deg) translate(125px) rotate(0deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(4) {
+      -webkit-transform: rotate(90deg) translate(125px) rotate(-30deg);
+              transform: rotate(90deg) translate(125px) rotate(-30deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(5) {
+      -webkit-transform: rotate(120deg) translate(125px) rotate(-60deg);
+              transform: rotate(120deg) translate(125px) rotate(-60deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(6) {
+      -webkit-transform: rotate(150deg) translate(125px) rotate(-90deg);
+              transform: rotate(150deg) translate(125px) rotate(-90deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(7) {
+      -webkit-transform: rotate(180deg) translate(125px) rotate(-120deg);
+              transform: rotate(180deg) translate(125px) rotate(-120deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(8) {
+      -webkit-transform: rotate(210deg) translate(125px) rotate(-150deg);
+              transform: rotate(210deg) translate(125px) rotate(-150deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(9) {
+      -webkit-transform: rotate(240deg) translate(125px) rotate(-180deg);
+              transform: rotate(240deg) translate(125px) rotate(-180deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(10) {
+      -webkit-transform: rotate(270deg) translate(125px) rotate(-210deg);
+              transform: rotate(270deg) translate(125px) rotate(-210deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(11) {
+      -webkit-transform: rotate(300deg) translate(125px) rotate(-240deg);
+              transform: rotate(300deg) translate(125px) rotate(-240deg); }
+    .mdl-timepicker .mdl-timepicker__minutes__circle > :nth-of-type(12) {
+      -webkit-transform: rotate(330deg) translate(125px) rotate(-270deg);
+              transform: rotate(330deg) translate(125px) rotate(-270deg); }
+    .debug .mdl-timepicker .mdl-timepicker__minutes__circle {
+      border: solid 1px tomato; }
+  .mdl-timepicker .mdl-timepicker__minutes li {
+    border-radius: 100%;
+    cursor: pointer; }
+    .debug .mdl-timepicker .mdl-timepicker__minutes li {
+      border: 1px solid blueviolet; }
+
+.mdl-dialog.mdl-timepicker {
+  left: calc(50% - (330px) / 2); }
+  .mdl-dialog-container .mdl-dialog.mdl-timepicker {
+    max-height: 90%; }
+  .mdl-dialog.mdl-timepicker .mdl-dialog__toolbar {
+    min-height: 60px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: justify;
+        align-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+                -ms-grid-row-align: center;
+            align-items: center; }
+  .mdl-dialog.mdl-timepicker .mdl-dialog__content {
+    padding: 18px 18px 0 18px; }
+  .mdl-dialog.mdl-timepicker .mdl-dialog__actions {
+    padding-top: 0;
+    padding-right: 0;
+    margin-right: -8px;
+    margin-bottom: 2px; }
+
 .arcade {
   color: #FBE165;
   font-family: 'Press Start 2P', cursive; }
