@@ -1,6 +1,11 @@
 # Change Log for spaceinvaders
 Space-Invaders built with Material Design Lite 4 Dart
 
+## [v1.2](http://github.com/mikemitterer/dart-space-invaders/compare/v1.1.0...v1.2) - 2018-03-26
+
+### Refactor
+* Removed Dice, changed to DryIce [72e8ae6](https://github.com/mikemitterer/dart-space-invaders/commit/72e8ae69e8c621794c4157047b51d4fbdbd82bfd)
+
 ## [v1.1.0](http://github.com/mikemitterer/dart-space-invaders/compare/v1.0.2...v1.1.0) - 2016-11-16
 
 ### Feature
