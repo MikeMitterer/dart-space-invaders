@@ -1,4 +1,4 @@
-@TestOn("content-shell")
+@TestOn("chrome")
 import 'package:test/test.dart';
 
 // import 'package:logging/logging.dart';
