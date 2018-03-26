@@ -1,16 +1,13 @@
 @TestOn("chrome")
-
 import 'package:test/test.dart';
 
 // import 'package:logging/logging.dart';
 
-import '../config.dart';
 import 'package:spaceinvaders/spaceinvaders.dart';
 
 main() async {
     // final Logger _logger = new Logger("test.SpeedGenerator");
-    
-    configLogging();
+    // configLogging();
 
 
     group('SpeedGenerator', () {

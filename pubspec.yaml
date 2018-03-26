@@ -19,6 +19,11 @@ dependencies:
     # git: git@github.com:MikeMitterer/dart-console_log_handler.git
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
+  dryice: ^1.8.0
+    # path: /Volumes/Daten/DevLocal/DevDart/dryice
+
+  validate: ^1.0.0
+
 dev_dependencies:
   test: any
   grinder: any
