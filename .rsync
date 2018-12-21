@@ -1,0 +1,5 @@
+# Rsync-Destination für SpaceInvaders
+#
+RSYNC_DESTINATION=":~/website/data/example/spaceinvaders/"
+EXAMPLE_URL="http://spaceinvaders.mikemitterer.at/"
+
