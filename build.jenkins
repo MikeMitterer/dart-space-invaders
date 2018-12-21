@@ -17,7 +17,7 @@ pipeline {
             steps {
                 ansiColor('xterm') {
                     sh 'dartanalyzer lib/'
-                    sh 'dartanalyzer test/'
+                    // sh 'dartanalyzer test/'
                 }
             }
         }
