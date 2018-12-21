@@ -1,0 +1,59 @@
+pipeline {
+    agent {
+        label 'linux'
+    }
+    stages {
+        stage('Preparation') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    ansiColor('xterm') {
+                        sh 'pub update'
+                    }
+                }
+
+            }
+        }
+        stage('Analyze') {
+            steps {
+                ansiColor('xterm') {
+                    sh 'dartanalyzer lib/'
+                    sh 'dartanalyzer test/'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                ansiColor('xterm') {
+                    sh 'pub run build_runner test --delete-conflicting-outputs -- test/unit -p chrome'
+                }
+            }
+        }
+
+        stage('Deploy samples') {
+            steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    ansiColor('xterm') {
+                        sh 'deploySamples.sh --prepare'
+                        sh 'deploySamples.sh --update'
+                        sh 'deploySamples.sh --deploy --release'
+                        sh 'deploySamples.sh --publish --force'
+                    }
+                }
+            }
+
+        stage('Deploy App') {
+            steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    ansiColor('xterm') {
+                        sh './deploy.sh --update'
+                        sh './deploy.sh --deploy --release'
+                        sh './deploy.sh --publish --force'
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+                       

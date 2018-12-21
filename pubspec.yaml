@@ -52,10 +52,11 @@ dependencies:
 
 dev_dependencies:
   test: any
-#  grinder: any
-#  sitegen: any
+
   build_runner: any
+  build_test: any
   build_web_compilers: any
+
   sass_builder: any
 
 
