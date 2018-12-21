@@ -1,5 +1,5 @@
 name: spaceinvaders
-version: 1.2.0
+version: 2.0.0
 description: Space-Invaders built with Material Design Lite 4 Dart
 author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-space-invaders
@@ -26,29 +26,29 @@ dependencies:
   m4d_core: '>=0.1.0 <1.0.0'
     # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
 
-  m4d_dialog: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dialog
+#  m4d_dialog: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dialog
 
-  m4d_directive: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_directive
+#  m4d_directive: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_directive
 
-  m4d_dnd: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dnd
+#  m4d_dnd: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dnd
 
   m4d_flux: '>=0.1.0 <1.0.0'
     # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_flux
 
-  m4d_form: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_form
+#  m4d_form: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_form
 
-  m4d_router: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_router
+#  m4d_router: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_router
 
-  m4d_template: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_template
+#  m4d_template: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_template
 
-  m4d_translate: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_translate
+#  m4d_translate: '>=0.1.0 <1.0.0'
+#    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_translate
 
 dev_dependencies:
   test: any

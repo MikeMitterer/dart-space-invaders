@@ -1,8 +1,8 @@
-name: mdl_arcade_button_sample
-description: Material Design Lite 'Arcade-Button' Sample
+name: arcade_button_sample
+description: Material4Dart (m4d) 'arcade_button' Sample
 version: 0.1.0
 author: Mike Mitterer <office@mikemitterer.at>
-homepage: https://github.com/MikeMitterer/dart-material-design-lite
+homepage: https://github.com/MikeMitterer/dart-space-invaders
 
 environment:
   sdk: ">=2.0.0 <3.0.0"
@@ -19,16 +19,13 @@ dependencies:
     path: ../..
 
   m4d_core: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
+  # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
 
   m4d_components: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
+  # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
 
 dev_dependencies:
   build_runner: any
   build_web_compilers: any
-  
+
   sass_builder: any
-
-
-

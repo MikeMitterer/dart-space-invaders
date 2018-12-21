@@ -71,7 +71,7 @@ class Tank extends ScreenObject with MoveHorizontale,MoveVertical implements Dra
     final Sprite _sprite;
 
     Tank(this._sprite) {
-        _logger.info("Tank created!");
+        _logger.fine("Tank created!");
     }
 
     @override
@@ -90,7 +90,7 @@ class Alien extends ScreenObject implements Drawable {
     bool killed = false;
 
     Alien(this._toggleSprite) {
-        _logger.info("Alien created!");
+        _logger.fine("Alien created!");
     }
 
     @override
@@ -122,7 +122,7 @@ class Swarm extends ScreenObject implements Drawable {
     int _height = 0;
 
     Swarm(this.aliens) {
-        _logger.info("Swarm created!");
+        _logger.fine("Swarm created!");
         _updatePosition();
     }
 

@@ -2,33 +2,30 @@ name: {{samplename}}_sample
 description: Material4Dart (m4d) '{{samplename}}' Sample
 version: 0.1.0
 author: Mike Mitterer <office@mikemitterer.at>
-homepage: https://github.com/MikeMitterer/m4d_spa
+homepage: https://github.com/MikeMitterer/dart-space-invaders
 
 environment:
   sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
+  intl: any
+  args: any
+  validate: any
 
-  m4d_spa:
+  logging: '>=0.11.3 <1.0.0'
+  console_log_handler: ^1.0.0
+
+  spaceinvaders:
     path: ../..
 
-  m4d_directive: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_directive
+  m4d_core: '>=0.1.0 <1.0.0'
+  # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
 
   m4d_components: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
+  # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
 
-  m4d_dialog: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dialog
-
-  m4d_template: '>=0.1.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_template
-
-  prettify: '>=0.3.9 <1.0.0'
-
-  chartjs: any
-  
 dev_dependencies:
   build_runner: any
   build_web_compilers: any
+
   sass_builder: any

@@ -50,13 +50,14 @@ h2 {
 .mdl-mini-footer {
     padding-top: 12px;
     padding-bottom: 12px;
+	font-size: 12px;
 }
 
 #view-source {
     position: fixed;
     display: block;
     right: 0;
-    top: 37px;
+    bottom: 37px;
     margin-right: 40px;
     z-index: 900;
 }
@@ -89,6 +90,6 @@ h2 {
 
 @media (max-width: 850px) {
     #view-source {
-        top: 29px;
+        bottom: 29px;
     }
 }
