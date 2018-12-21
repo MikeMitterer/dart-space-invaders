@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Material Design Lite (MDL/Dart) for Dart is a library of components for web developers based on Google's Material Design, ported to Dart.">
+    <meta name="description" content="Material 4 Dart (M4D) is a library of components for web developers based on Google's Material Design, ported to Dart.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
 
@@ -26,16 +26,12 @@
     <link rel="canonical" href="http://www.example.com/">
     -->
 
-    <link rel="stylesheet" href="packages/mdl/assets/fonts/fonts.min.css">
-    <link rel="stylesheet" href="packages/mdl/assets/styles/material.min.css">
-
     <!-- Another way for accessing the necessary font:
     <link href='//fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     -->
 
     <link rel="stylesheet" href="demo.css">
-    <link rel="stylesheet" href="styles.css">
 
     <style>
         div.loading { display: none; }
@@ -71,8 +67,10 @@
     </main>
     <footer class="mdl-mini-footer">
         <div class="mdl-mini-footer--left-section">
-            <p class="sitegen-link">Page was generated with <a href="https://pub.dartlang.org/packages/sitegen" target="_blank">SiteGen.</a>
-             <span class="additional-info">The static site generator for Dart.</span></p>
+            <div>Sample for pub-package:
+                <a href="https://pub.dartlang.org/packages/m4d_spa" target="_blank">m4d_spa</a>
+                <span class="published">/ published: <span class="pubdate">2018-09-19 / 14:09:52</span></span>
+            </div>
         </div>
         <div class="mdl-mini-footer--right-section">
             <p class="mm-link">Brought to you by:
@@ -83,10 +81,10 @@
     </footer>
 </div>
 <a href="{{sampleurl}}" target="_blank" id="view-source">
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">pageview</i></button>
+    <button class="mdl-button mdl-button--fab mdl-ripple-effect mdl-button--accent"><i class="material-icons">pageview</i></button>
 </a>
-<script type="application/dart" src="main.dart"></script>
-<script data-pub-inline src="packages/browser/dart.js"></script>
+
+<script defer src="main.dart.js"></script>
 
 <!-- Analytics -->
 <script>

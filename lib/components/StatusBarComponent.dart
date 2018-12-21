@@ -51,8 +51,8 @@ class StatusBarComponent extends MdlComponent {
 
     final SpaceInvadersStore _store;
 
-    StatusBarComponent.fromElement(final dom.HtmlElement element,final di.Injector injector)
-        :  _store = injector.get(SpaceInvadersStore), super(element,injector) {
+    StatusBarComponent.fromElement(final dom.HtmlElement element,final ioc.Container injector)
+        :  _store = siService.SpaceInvadersStore.resolve(), super(element,injector) {
         
         _init();
     }
@@ -136,7 +136,7 @@ class StatusBarComponent extends MdlComponent {
 void registerStatusBarComponent() {
     final MdlConfig config = new MdlWidgetConfig<StatusBarComponent>(
         _StatusBarComponentConstant.WIDGET_SELECTOR,
-            (final dom.HtmlElement element,final di.Injector injector) => new StatusBarComponent.fromElement(element,injector)
+            (final dom.HtmlElement element,final ioc.Container injector) => new StatusBarComponent.fromElement(element,injector)
     );
     
     // If you want <mdlx-status-bar></mdlx-status-bar> set selectorType to SelectorType.TAG.

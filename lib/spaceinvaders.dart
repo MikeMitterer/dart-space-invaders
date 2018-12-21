@@ -26,6 +26,19 @@ import 'dart:math' as math;
 
 import 'package:logging/logging.dart';
 
+import 'package:m4d_core/m4d_core.dart';
+import 'package:m4d_core/m4d_ioc.dart' as ioc;
+import 'package:m4d_components/m4d_components.dart';
+
+import 'components.dart';
+import 'services.dart' as siService;
+import 'store.dart';
+
+export 'components.dart';
+export 'components/interface/store.dart';
+export 'components/interface/actions.dart';
+export 'gamestate.dart';
+
 part 'spaceinvaders/drawables.dart';
 part 'spaceinvaders/painter.dart';
 part 'spaceinvaders/screen.dart';
@@ -36,6 +49,22 @@ part 'spaceinvaders/InputHandler.dart';
 part 'spaceinvaders/Magazin.dart';
 part 'spaceinvaders/SpeedGenerator.dart';
 part 'spaceinvaders/SpriteFactory.dart';
+
+class SpaceInvaderModule extends ioc.Module {
+    @override
+    configure() {
+        registerSpaceInvaderComponents();
+
+        ioc.Container().bind(siService.SpaceInvadersStore).to(SpaceInvadersStoreImpl());
+    }
+
+    @override
+    List<ioc.Module> get dependsOn => [
+        CoreComponentsModule()
+    ];
+}
+
+
 
 
 

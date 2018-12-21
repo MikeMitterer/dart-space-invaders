@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2016, Michael Mitterer (office@mikemitterer.at),
+ * Copyright (c) 2018, Michael Mitterer (office@mikemitterer.at),
  * IT-Consulting and Development Limited.
- * 
+ *
  * All Rights Reserved.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -17,23 +17,19 @@
  * limitations under the License.
  */
 
-/// Data-Model for SI-Components
-library spaceinvaders.components.stores;
+/// Concrete implementation of Application-Specific stores
+library spaceinvaders.store;
 
-import 'package:mdl/mdlflux.dart';
-import 'package:dryice/dryice.dart' as di;
+
+import 'package:logging/logging.dart';
+import 'package:validate/validate.dart';
+
+import 'package:m4d_flux/m4d_flux.dart';
+
+import 'package:spaceinvaders/components/interface/store.dart';
+import 'package:spaceinvaders/components/interface/actions.dart';
+
 import 'package:spaceinvaders/gamestate.dart';
 
-/// Data-Model for this application. Only one store is necessary.
-///
-/// Interface has just getters!
-///
-@di.injectable
-abstract class SpaceInvadersStore extends DataStore {
+part 'store/SpaceInvaderStoreImpl.dart';
 
-    bool get hasStarted;
-
-    GameState get gamestate;
-
-    int get tanksLost;
-}

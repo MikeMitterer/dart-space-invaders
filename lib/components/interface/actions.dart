@@ -20,7 +20,7 @@
 /// All [Action]s used for this application
 library spaceinvaders.components.actions;
 
-import 'package:mdl/mdlflux.dart';
+import 'package:m4d_flux/m4d_flux.dart';
 import 'package:validate/validate.dart';
 
 import 'package:spaceinvaders/gamestate.dart';

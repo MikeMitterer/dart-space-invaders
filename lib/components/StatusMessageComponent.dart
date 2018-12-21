@@ -50,8 +50,8 @@ class StatusMessageComponent extends MdlComponent {
     /// Change this to a more specific version
     final SpaceInvadersStore _store;
     
-    StatusMessageComponent.fromElement(final dom.HtmlElement element,final di.Injector injector)
-        : _store = injector.get(SpaceInvadersStore), super(element,injector) {
+    StatusMessageComponent.fromElement(final dom.HtmlElement element,final ioc.Container injector)
+        : _store = siService.SpaceInvadersStore.resolve(), super(element,injector) {
         
         _init();
         
@@ -124,7 +124,7 @@ class StatusMessageComponent extends MdlComponent {
 void registerStatusMessageComponent() {
     final MdlConfig config = new MdlWidgetConfig<StatusMessageComponent>(
         _StatusMessageComponentConstant.WIDGET_SELECTOR,
-            (final dom.HtmlElement element,final di.Injector injector) => new StatusMessageComponent.fromElement(element,injector)
+            (final dom.HtmlElement element,final ioc.Container injector) => new StatusMessageComponent.fromElement(element,injector)
     );
     
     // If you want <mdlx-status-message></mdlx-status-message> set selectorType to SelectorType.TAG.

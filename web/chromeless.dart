@@ -9,8 +9,6 @@ import 'package:logging/logging.dart';
 
 import 'package:spaceinvaders/spaceinvaders.dart';
 
-part 'app/config.dart';
-
 part 'app/init.dart';
 part 'app/update.dart';
 part 'app/render.dart';

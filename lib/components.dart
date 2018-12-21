@@ -21,12 +21,17 @@ library spaceinvaders.components;
 
 import 'dart:html' as dom;
 
-import 'package:mdl/mdl.dart';
 
 import 'package:logging/logging.dart';
-import 'package:dryice/dryice.dart' as di;
 
-import 'package:spaceinvaders/components/interface/stores.dart';
+import 'package:m4d_core/m4d_core.dart';
+import 'package:m4d_core/m4d_ioc.dart' as ioc;
+import 'package:m4d_flux/m4d_flux.dart';
+import 'package:m4d_components/m4d_components.dart';
+
+import 'package:spaceinvaders/services.dart' as siService;
+
+import 'package:spaceinvaders/components/interface/store.dart';
 import 'package:spaceinvaders/components/interface/actions.dart';
 import 'package:spaceinvaders/gamestate.dart';
 
@@ -43,3 +48,4 @@ void registerSpaceInvaderComponents() {
     registerStatusMessageComponent();
 
 }
+

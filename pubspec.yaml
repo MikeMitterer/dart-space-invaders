@@ -5,34 +5,57 @@ author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-space-invaders
 
 environment:
-  sdk: ">=1.8.0 <2.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
-  browser: ^0.10.0
-
-  mdl: ^2.0.0
-    # ^1.0.0
-    # path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
 
   logging: '>=0.11.3 <1.0.0'
-  console_log_handler: '>=0.5.0 <1.0.0'
+
+  console_log_handler: ^1.0.0
     # git: git@github.com:MikeMitterer/dart-console_log_handler.git
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
-  dryice: ^1.8.0
-    # path: /Volumes/Daten/DevLocal/DevDart/dryice
-
   validate: ^1.0.0
+
+  m4d_animation: '>=0.1.0 <1.0.0'
+      # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_animation
+
+  m4d_components: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
+
+  m4d_core: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
+
+  m4d_dialog: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dialog
+
+  m4d_directive: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_directive
+
+  m4d_dnd: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_dnd
+
+  m4d_flux: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_flux
+
+  m4d_form: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_form
+
+  m4d_router: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_router
+
+  m4d_template: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_template
+
+  m4d_translate: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_translate
 
 dev_dependencies:
   test: any
-  grinder: any
-  sitegen: any
+#  grinder: any
+#  sitegen: any
+  build_runner: any
+  build_web_compilers: any
+  sass_builder: any
 
-transformers:
 
-  - $dart2js:
-      commandLineOptions: [--enable-experimental-mirrors]
-      checked: true
-      minify: false
-      sourceMaps: true

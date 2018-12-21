@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Michael Mitterer (office@mikemitterer.at),
+ * Copyright (c) 2016, Michael Mitterer (office@mikemitterer.at),
  * IT-Consulting and Development Limited.
  * 
  * All Rights Reserved.
@@ -17,14 +17,21 @@
  * limitations under the License.
  */
 
-part of spaceinvaders.app;
+/// Data-Model for SI-Components
+library spaceinvaders.components.stores;
 
-/// Minimal Log-Configuration
-void configLogging() {
-    hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
+import 'package:m4d_flux/m4d_flux.dart';
+import 'package:spaceinvaders/gamestate.dart';
 
-    // now control the logging.
-    // Turn off all logging first
-    Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogConsoleHandler());
+/// Data-Model for this application. Only one store is necessary.
+///
+/// Interface has just getters!
+///
+abstract class SpaceInvadersStore extends DataStore {
+
+    bool get hasStarted;
+
+    GameState get gamestate;
+
+    int get tanksLost;
 }

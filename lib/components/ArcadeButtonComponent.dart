@@ -19,29 +19,28 @@
      
 part of spaceinvaders.components;
  
-/// Basic DI configuration for [ArcadeButtonComponent]
-///
-/// Usage:
-///     class MainModule extends di.Module {
-///         MainModule() {
-///             install(new ArcadeButtonComponentModule());
-///         }     
-///     }
-class ArcadeButtonComponentModule  extends di.Module {
-
-    @override
-    configure() {
-        // bind(DeviceProxy);
-        
-        // -- services
-        // bind(SignalService, toImplementation: SignalServiceImpl);
-    }
-} 
+///// Basic DI configuration for [ArcadeButtonComponent]
+/////
+///// Usage:
+/////     class MainModule extends di.Module {
+/////         MainModule() {
+/////             install(new ArcadeButtonComponentModule());
+/////         }
+/////     }
+//class ArcadeButtonComponentModule  extends di.Module {
+//
+//    @override
+//    configure() {
+//        // bind(DeviceProxy);
+//
+//        // -- services
+//        // bind(SignalService, toImplementation: SignalServiceImpl);
+//    }
+//}
 
 /// Controller for <div class="mdlx-arcade-button"></div>
 ///
 
-@Component
 class ArcadeButtonComponent extends MdlComponent {
     final Logger _logger = new Logger('spaceinvaders.components.ArcadeButtonComponent');
 
@@ -50,8 +49,8 @@ class ArcadeButtonComponent extends MdlComponent {
 
     final SpaceInvadersStore _store;
 
-    ArcadeButtonComponent.fromElement(final dom.HtmlElement element,final di.Injector injector)
-        : _store = injector.get(SpaceInvadersStore), super(element,injector) {
+    ArcadeButtonComponent.fromElement(final dom.HtmlElement element,final ioc.Container injector)
+        : _store = siService.SpaceInvadersStore.resolve(), super(element,injector) {
         
         _init();
         
@@ -96,7 +95,7 @@ class ArcadeButtonComponent extends MdlComponent {
 void registerArcadeButtonComponent() {
     final MdlConfig config = new MdlWidgetConfig<ArcadeButtonComponent>(
         _ArcadeButtonComponentConstant.WIDGET_SELECTOR,
-            (final dom.HtmlElement element,final di.Injector injector)
+            (final dom.HtmlElement element,final ioc.Container injector)
                 => new ArcadeButtonComponent.fromElement(element,injector)
     );
     

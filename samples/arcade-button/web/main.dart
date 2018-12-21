@@ -1,17 +1,13 @@
 import "dart:html" as dom;
 
-import 'package:logging/logging.dart';
 import 'package:console_log_handler/console_log_handler.dart';
-import 'package:di/di.dart' as di;
 
-import 'package:mdl/mdl.dart';
+import 'package:m4d_core/m4d_ioc.dart' as ioc;
+import 'package:m4d_core/m4d_core.dart';
+import 'package:m4d_core/services.dart' as coreService;
 
-import 'package:spaceinvaders/components/interface/stores.dart';
+import 'package:spaceinvaders/spaceinvaders.dart';
 
-import 'package:spaceinvaders/components.dart';
-import 'package:spaceinvaders/stores.dart';
-
-@MdlComponentModel @di.Injectable()
 class Application extends MaterialApplication {
     final Logger _logger = new Logger('main.Application');
 
@@ -20,9 +16,12 @@ class Application extends MaterialApplication {
 
     @override
     void run() {
-        final ArcadeButtonComponent button = ArcadeButtonComponent.widget(dom.querySelector("mdlx-arcade-button"));
-        button.onClick.listen((_) {
-            _logger.info("Clicked!");
+        Future(() {
+            final button = ArcadeButtonComponent.widget(dom.querySelector("mdlx-arcade-button"));
+
+            button.onClick.listen((_) {
+                _logger.info("Clicked!");
+            });
         });
     }
 
@@ -33,36 +32,14 @@ class Application extends MaterialApplication {
 main() async {
     // final Logger _logger = new Logger('main.Arcade-Button');
 
-    configLogging();
+    configLogging(show: Level.INFO);
 
-    registerMdl();
-    registerSpaceInvaderComponents();
+    // Initialize M4D
+    ioc.Container.bindModules([
+        SpaceInvaderModule()
+    ]).bind(coreService.Application).to(Application());;
 
-    final Application app = await componentFactory().rootContext(Application).addModule(
-        new SpaceInvadersModule()).run(enableVisualDebugging: true);
-
+    final app = await componentHandler().upgrade<Application>();
     app.run();
 }
 
-/**
- * SI Module
- */
-class SpaceInvadersModule extends di.Module {
-    SpaceInvadersModule() {
-        // install(new XXXModule());
-
-        // -- services
-
-        // -- stores
-        bind(SpaceInvadersStore, toImplementation: SpaceInvadersStoreImpl);
-    }
-}
-
-void configLogging() {
-    hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
-
-    // now control the logging.
-    // Turn off all logging first
-    Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogConsoleHandler());
-}

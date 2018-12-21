@@ -1,5 +1,9 @@
 //@import "packages/mdl/assets/styles/material-design-lite";
-@import "packages/spaceinvaders/assets/styles/main.scss";
+
+@import "package:m4d_components/assets/styles/material-design-lite";
+@import "package:spaceinvaders/assets/styles/spaceinvaders.scss";
+
+@import "_app";
 
 .demo-page--arcade_button, .demo-section--arcade_button {
 

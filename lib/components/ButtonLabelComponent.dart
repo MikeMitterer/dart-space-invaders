@@ -49,8 +49,8 @@ class ButtonLabelComponent extends MdlComponent {
 
     final SpaceInvadersStore _store;
 
-    ButtonLabelComponent.fromElement(final dom.HtmlElement element,final di.Injector injector)
-        : _store = injector.get(SpaceInvadersStore), super(element,injector) {
+    ButtonLabelComponent.fromElement(final dom.HtmlElement element,final ioc.Container injector)
+        : _store = siService.SpaceInvadersStore.resolve(), super(element,injector) {
         
         _init();
         
@@ -112,7 +112,7 @@ class ButtonLabelComponent extends MdlComponent {
 void registerButtonLabelComponent() {
     final MdlConfig config = new MdlWidgetConfig<ButtonLabelComponent>(
         _ButtonLabelComponentConstant.WIDGET_SELECTOR,
-            (final dom.HtmlElement element,final di.Injector injector) => new ButtonLabelComponent.fromElement(element,injector)
+            (final dom.HtmlElement element,final ioc.Container injector) => new ButtonLabelComponent.fromElement(element,injector)
     );
     
     // If you want <mdlx-button-label></mdlx-button-label> set selectorType to SelectorType.TAG.

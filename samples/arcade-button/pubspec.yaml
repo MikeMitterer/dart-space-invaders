@@ -4,32 +4,31 @@ version: 0.1.0
 author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-material-design-lite
 
-dependencies:
-  browser: any
+environment:
+  sdk: ">=2.0.0 <3.0.0"
 
+dependencies:
   intl: any
   args: any
   validate: any
-  browser_detect: any
 
-  logging: any
-  logging_handlers: any
-  console_log_handler: any
-  #  path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
+  logging: '>=0.11.3 <1.0.0'
+  console_log_handler: ^1.0.0
 
   spaceinvaders:
     path: ../..
 
-  mdl: ^1.0.0
+  m4d_core: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_core
 
-  di: any
+  m4d_components: '>=0.1.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/m4d/m4d_components
 
-transformers:
-  - di
-
-#  - $dart2js:
-#      minify: false
-#      sourceMaps: true
+dev_dependencies:
+  build_runner: any
+  build_web_compilers: any
+  
+  sass_builder: any
 
 
 
