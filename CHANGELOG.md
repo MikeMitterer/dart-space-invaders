@@ -4,6 +4,7 @@ Space-Invaders built with Material Design Lite 4 Dart
 ## [Unreleased](http://github.com/mikemitterer/dart-space-invaders/compare/v2.0...HEAD)
 
 ### Docs
+* Link to Arace-Button example added [a2defea](https://github.com/mikemitterer/dart-space-invaders/commit/a2defea5754e88f3d2c13b3f0c8dcf91af456da4)
 * Links in README [d615abe](https://github.com/mikemitterer/dart-space-invaders/commit/d615abe26449eeed7dec23edda53fda328feab3b)
 
 ## [v1.2](http://github.com/mikemitterer/dart-space-invaders/compare/v1.1.0...v1.2) - 2018-03-26
