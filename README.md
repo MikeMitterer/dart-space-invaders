@@ -1,5 +1,5 @@
 # Space Invaders 4 Dart
-> The classic Space Invaders game written with Dart and [Material Design Lite 4 Dart](http://www.material-design-lite.pub).  
+> The classic Space Invaders game written with Dart and [Material 4 Dart](https://pub.dartlang.org/packages?q=m4d).  
 
 See it Live: [spaceinvaders.mikemitterer.at](http://spaceinvaders.mikemitterer.at)
 
@@ -7,7 +7,7 @@ See it Live: [spaceinvaders.mikemitterer.at](http://spaceinvaders.mikemitterer.a
 
 ### License
 
-    Copyright 2016 Michael Mitterer (office@mikemitterer.at),
+    Copyright 2018 Michael Mitterer (office@mikemitterer.at),
     IT-Consulting and Development Limited, Austrian Branch
 
     Licensed under the Apache License, Version 2.0 (the "License");
