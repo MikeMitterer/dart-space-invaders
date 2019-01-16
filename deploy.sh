@@ -7,7 +7,7 @@
 
 # Vars die in .bashrc gesetzt werden. ~ (DEV_DOCKER, DEV_SEC, DEV_LOCAL) ~~~~~~
 # [] müssen entfernt werden (IJ Bug https://goo.gl/WJQGMa)
-if [ -z ${DEV_DOCKER+set} ]; then echo "Var 'DEV_DOCKER' nicht gesetzt!"; exit 1; fi
+if [[ -z ${DEV_BASH+set} ]]; then echo "Var 'DEV_DOCKER' nicht gesetzt!"; exit 1; fi
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Abbruch bei Problemen (https://goo.gl/hEEJCj)
@@ -33,46 +33,14 @@ SCRIPTPATH=`dirname ${SCRIPT}`
 #   Hier sind z.B. Farben, generell globale VARs und Funktionen definiert
 #
 
-GLOBAL_DIR="${DEV_DOCKER}/_global"
-LIB_DIR="${GLOBAL_DIR}/lib"
-
 SAMPLES_LIB="samples.lib.sh"
-
-if [[ ! -f "${LIB_DIR}/${SAMPLES_LIB}" ]]
-then
-    echo "Samples-lib ${LIB_DIR}/${SAMPLES_LIB} existiert nicht!"
-    exit 1
-fi
-
-. "${LIB_DIR}/${SAMPLES_LIB}"
+. "${DEV_BASH}/${SAMPLES_LIB}"
 
 #------------------------------------------------------------------------------
 # Config
 
-#SETTINGS_FILE=".${APPNAME}.conf"
-#SETTINGS_LOCAL="./$SETTINGS_FILE"
-#
-#WEB_DESCRIPTION="No description available"
-#WEB_PACKAGE="undefined"
-#
-#if [[ -e ${SETTINGS_LOCAL} ]]
-#then
-#    echo -e "${BLUE}Reading settings from ${SETTINGS_LOCAL}...${NC}"
-#    . ${SETTINGS_LOCAL}
-#else
-#    echo "Update the following settings in ${SETTINGS_FILE}"
-#    echo
-#    echo 'WEB_DESCRIPTION="No description available"' | tee ${SETTINGS_LOCAL}
-#    echo 'WEB_PACKAGE="undefined"' | tee -a ${SETTINGS_LOCAL}
-#    exit
-#fi
-
 #------------------------------------------------------------------------------
 # Functions
-#
-
-#------------------------------------------------------------------------------
-# Options
 #
 
 #------------------------------------------------------------------------------
